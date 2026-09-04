@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pinch — Support</title>
+<meta name="description" content="Support and answers for Pinch, a native image compressor for macOS that works entirely on your Mac.">
+<style>
+:root {
+  --ink: #14201d;
+  --muted: #5c6b67;
+  --faint: #8a9793;
+  --bg: #ffffff;
+  --panel: #f4f7f6;
+  --line: #e2e9e7;
+  --brand: #12806a;
+  --brand-deep: #0d584f;
+  --brand-lit: #1fb68c;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e8efec;
+    --muted: #a3b2ad;
+    --faint: #7d8d88;
+    --bg: #0f1513;
+    --panel: #18201e;
+    --line: #26302d;
+    --brand: #3ecfa5;
+    --brand-deep: #0d584f;
+    --brand-lit: #1fb68c;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero {
+  background: linear-gradient(160deg, var(--brand-deep), var(--brand-lit));
+  color: #fff;
+  padding: 68px 24px 60px;
+  text-align: center;
+}
+
+.hero .mark {
+  width: 76px; height: 76px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .14);
+  border: 1px solid rgba(255, 255, 255, .28);
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+}
+
+.hero .mark svg { display: block; }
+
+.hero h1 {
+  margin: 0 0 10px;
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+
+.hero p {
+  margin: 0 auto;
+  max-width: 30em;
+  font-size: 19px;
+  color: rgba(255, 255, 255, .86);
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 56px 24px 80px;
+}
+
+h2 {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--brand);
+  margin: 52px 0 16px;
+}
+
+main > h2:first-child { margin-top: 0; }
+
+h3 {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  margin: 32px 0 8px;
+}
+
+p { margin: 0 0 16px; }
+
+a { color: var(--brand); }
+
+ul { margin: 0 0 16px; padding-left: 22px; }
+li { margin-bottom: 8px; }
+
+.lead {
+  font-size: 19px;
+  color: var(--muted);
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px 24px;
+  margin: 0 0 20px;
+}
+
+.card p:last-child { margin-bottom: 0; }
+
+.mail {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 19px;
+  word-break: break-all;
+}
+
+.meta {
+  color: var(--faint);
+  font-size: 15px;
+}
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 28px 24px 48px;
+  text-align: center;
+  color: var(--faint);
+  font-size: 15px;
+}
+
+footer a { color: var(--faint); }
+
+@media (max-width: 560px) {
+  .hero { padding: 52px 20px 46px; }
+  .hero h1 { font-size: 32px; }
+  .hero p { font-size: 17px; }
+  main { padding: 40px 20px 64px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="mark">
+    <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+      <rect x="4.6" y="10.4" width="30.8" height="9.2" rx="4.6" fill="#fff"/>
+      <rect x="12.3" y="23.2" width="15.4" height="6.4" rx="3.2" fill="#a8ffdc"/>
+    </svg>
+  </div>
+  <h1>Pinch</h1>
+  <p>Shrink photos and screenshots on your Mac. No upload, no account, no subscription.</p>
+</div>
+
+<main>
+
+<h2>Contact</h2>
+
+<div class="card">
+  <p>Questions, bug reports, feature requests — write to me directly. I read every message.</p>
+  <p><a class="mail" href="mailto:findappshelp@gmail.com">findappshelp@gmail.com</a></p>
+  <p class="meta">I usually reply within two business days. Telling me your macOS version and the kind of image involved makes a fix much faster.</p>
+</div>
+
+<h2>Requirements</h2>
+
+<p>macOS 13 Ventura or later. Apple silicon and Intel are both supported.</p>
+
+<h2>Questions people ask</h2>
+
+<h3>Are my images uploaded anywhere?</h3>
+<p>No — and not by choice alone. Pinch ships without the network entitlement, so macOS itself will not let the app open a network connection. There is no account, no analytics, and no crash reporting. See the <a href="privacy.html">privacy policy</a>.</p>
+
+<h3>My PNG barely got smaller. Why?</h3>
+<p>PNG is a lossless format, so the quality slider does not apply to it. Two things help:</p>
+<ul>
+  <li>Lower <strong>PNG Colors</strong>. Screenshots, diagrams and charts usually look identical at 256 colors and shrink by 70–85%.</li>
+  <li>Or switch <strong>Output Format</strong> to WebP or HEIC, which compress photographic images far better than PNG can.</li>
+</ul>
+
+<h3>What is WebP, and should I use it?</h3>
+<p>WebP is an image format made for the web. At the same visible quality it is typically 25–50% smaller than JPEG, and every current browser supports it. If the file is going on a website, choose WebP. If you are sending it to a person, or putting it into a document or an older app, keep JPEG — it opens everywhere.</p>
+
+<h3>Where do the compressed files go?</h3>
+<p>Into the folder you pick under <strong>Save Location</strong>. Pinch remembers that folder between launches. After a batch finishes, <strong>Show in Finder</strong> opens it. You can also turn on <strong>Replace Originals</strong> to overwrite the files in place — available only when you are not changing the format.</p>
+
+<h3>The file did not reach my target size.</h3>
+<p>Pinch will not degrade an image past the point where quality collapses, so a target it cannot honestly hit is reported instead of faked. PNGs with many colors are the usual case. Turning on <strong>Limit Longest Side</strong> is the reliable fix — halving the dimensions cuts far more weight than any amount of extra quality loss.</p>
+
+<h3>Does compressing remove my camera info or GPS location?</h3>
+<p>Only if you ask. <strong>Keep All</strong> is the default and preserves everything. <strong>Remove Location Only</strong> strips GPS coordinates but keeps camera settings and the capture date. <strong>Remove All</strong> clears the metadata entirely.</p>
+
+<h3>What if a file would get bigger?</h3>
+<p>Pinch compares the result against the original before writing anything. If compressing would not help, the original is kept and the file is left untouched.</p>
+
+<h3>Can I compress a whole folder at once?</h3>
+<p>Yes — drop the folder onto the window and every image inside is queued. You can also paste a screenshot straight from the clipboard with <strong>⌘V</strong>.</p>
+
+<h3>Refunds</h3>
+<p>Purchases are handled by Apple, so refunds go through them at <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>. If something is broken, though, write to me first — I would rather fix it.</p>
+
+</main>
+
+<footer>
+  <a href="privacy.html">Privacy Policy</a>
+</footer>
+
+</body>
+</html>
