@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Privacy Policy — Bulk URL Removal for Search Console</title>
+<style>
+  :root {
+    --ground:#fbfbfa; --surface:#fff; --ink:#191c1e; --soft:#5a6265; --faint:#8a9295;
+    --line:#e4e7e4; --accent:#1b347a; --warm:#a8442a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --ground:#141719; --surface:#1c2023; --ink:#e9ece9; --soft:#a5adb0; --faint:#7b8386;
+            --line:#2b3134; --accent:#93aef0; --warm:#e0977a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--ground); color:var(--ink);
+    font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif; }
+  .wrap { max-width:44rem; margin:0 auto; padding-inline:20px; padding-block:56px 80px; }
+  h1 { font-size:1.9rem; line-height:1.2; margin:0 0 8px; letter-spacing:-.02em; }
+  .sub { color:var(--soft); margin:0 0 6px; }
+  .date { color:var(--faint); font-size:.85rem; margin:0 0 40px; }
+  h2 { font-size:1.2rem; margin:44px 0 10px; letter-spacing:-.01em; }
+  h3 { font-size:1rem; margin:26px 0 6px; }
+  p, li { color:var(--ink); }
+  p { margin:0 0 14px; }
+  ul { margin:0 0 14px; padding-left:1.3em; }
+  li { margin-bottom:7px; }
+  a { color:var(--accent); }
+  code { font-family:ui-monospace,Menlo,monospace; font-size:.88em;
+    background:var(--line); padding:.1em .38em; border-radius:3px; }
+  .lead { border-left:3px solid var(--accent); background:var(--surface);
+    padding:14px 16px; border-radius:0 4px 4px 0; margin:0 0 32px; }
+  .lead p:last-child { margin-bottom:0; }
+  .scroller { overflow-x:auto; margin:18px 0; border:1px solid var(--line);
+    border-radius:5px; background:var(--surface); }
+  table { border-collapse:collapse; width:100%; font-size:.9rem; }
+  th, td { text-align:left; padding:10px 14px; border-bottom:1px solid var(--line);
+    vertical-align:top; }
+  th { font-size:.75rem; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--faint); font-weight:600; background:var(--ground); }
+  tbody tr:last-child td { border-bottom:none; }
+  .never li::marker { color:var(--warm); }
+  hr { border:none; border-top:1px solid var(--line); margin:56px 0 40px; }
+  footer { color:var(--faint); font-size:.85rem; margin-top:48px;
+    padding-top:20px; border-top:1px solid var(--line); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Privacy Policy</h1>
+  <p class="sub">Bulk URL Removal for Search Console — Chrome extension</p>
+  <p class="date">Last updated: 11 September 2026</p>
+
+  <div class="lead">
+    <p><strong>Your URL lists never leave your browser.</strong> This extension automates clicks
+    on a Search Console page you are already signed in to. It has no server, no account,
+    and no analytics. The only data that ever leaves your computer is a license key, and only
+    if you choose to buy the paid version.</p>
+  </div>
+
+  <h2>What the extension does</h2>
+  <p>Google Search Console accepts URL removal requests one at a time. This extension fills in
+  and submits that form repeatedly for a list of URLs you provide, inside your own browser,
+  on your own verified property. It does not use any Google API and has no access to your
+  Google account beyond the page you have open.</p>
+
+  <h2>What data is handled, and where it goes</h2>
+
+  <div class="scroller">
+    <table>
+      <thead>
+        <tr><th>Data</th><th>Where it is stored</th><th>Sent anywhere?</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>The URLs you paste or upload</td>
+          <td>Your browser only (<code>chrome.storage.local</code>)</td>
+          <td><strong>No</strong></td>
+        </tr>
+        <tr>
+          <td>Job progress and per-URL results</td>
+          <td>Your browser only</td>
+          <td><strong>No</strong></td>
+        </tr>
+        <tr>
+          <td>Free-tier usage count</td>
+          <td>Your browser only</td>
+          <td><strong>No</strong></td>
+        </tr>
+        <tr>
+          <td>License key, if you buy</td>
+          <td>Your browser only</td>
+          <td><strong>Yes</strong> — to Lemon Squeezy, to check it is valid</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>About the license check</h3>
+  <p>If you purchase the unlimited version, you receive a license key. When you paste that key
+  into the extension, the key and a fixed label (<code>chrome-extension</code>) are sent to
+  <a href="https://www.lemonsqueezy.com/privacy" rel="noopener">Lemon Squeezy</a>, our payment
+  provider, so it can confirm the key is genuine. The check repeats at most once a week.
+  Nothing else is included in that request — not your URLs, not your Search Console property,
+  not your Google account.</p>
+  <p>Payment itself happens on Lemon Squeezy's own checkout page, not inside this extension.
+  Your card details are never seen by the extension or by its developer.</p>
+
+  <h2>What this extension never does</h2>
+  <ul class="never">
+    <li>It does not collect, transmit, or store your URLs, sitemaps, or Search Console data.</li>
+    <li>It does not read your Google account, email, or any other Google service.</li>
+    <li>It does not use analytics, tracking pixels, cookies, or fingerprinting.</li>
+    <li>It does not sell, rent, or share data with anyone. There is nothing to sell.</li>
+    <li>It does not run on any site other than Search Console.</li>
+  </ul>
+
+  <h2>Permissions, and why each one is needed</h2>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>Permission</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><code>storage</code></td>
+            <td>To save your URL list and progress so a run can be resumed after an
+            interruption. Stored locally.</td></tr>
+        <tr><td><code>activeTab</code></td>
+            <td>To act on the Search Console tab you have open when you click the extension.</td></tr>
+        <tr><td><code>scripting</code></td>
+            <td>To re-attach the extension to the page after a Chrome update, instead of
+            silently failing.</td></tr>
+        <tr><td><code>search.google.com/search-console/*</code></td>
+            <td>The only page the extension operates on.</td></tr>
+        <tr><td><code>api.lemonsqueezy.com/*</code></td>
+            <td>License key validation only. Used only if you bought the paid version.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>No other hosts are contacted, and no broad site access is requested.</p>
+
+  <h2>Deleting your data</h2>
+  <p>Everything the extension stores lives in your browser. Removing the extension from Chrome
+  deletes all of it. You can also clear the saved job and license at any time from the
+  extension's own panel.</p>
+
+  <h2>Children</h2>
+  <p>This is a tool for website owners and is not directed at children.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If this policy changes in a way that affects what data is handled, the change will be
+  described here and the date above will be updated.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy or the extension: <a href="mailto:lmy8129@gmail.com">lmy8129@gmail.com</a></p>
+
+  <hr />
+
+  <h1 style="font-size:1.5rem">개인정보 처리방침</h1>
+  <p class="sub">Bulk URL Removal for Search Console — 크롬 확장 프로그램</p>
+  <p class="date">최종 수정: 2026년 9월 11일</p>
+
+  <div class="lead">
+    <p><strong>입력하신 URL 목록은 브라우저 밖으로 나가지 않습니다.</strong> 이 확장은 이미 로그인되어 있는
+    Search Console 화면을 대신 클릭해줄 뿐입니다. 서버도, 계정도, 분석 도구도 없습니다.
+    컴퓨터 밖으로 나가는 유일한 정보는 라이선스 키이며, 유료 버전을 구매하신 경우에만 해당합니다.</p>
+  </div>
+
+  <h2>취급하는 정보와 전송 여부</h2>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>정보</th><th>저장 위치</th><th>외부 전송</th></tr></thead>
+      <tbody>
+        <tr><td>입력한 URL 목록</td><td>브라우저 내부에만</td><td><strong>없음</strong></td></tr>
+        <tr><td>진행 상황과 처리 결과</td><td>브라우저 내부에만</td><td><strong>없음</strong></td></tr>
+        <tr><td>무료 사용 개수</td><td>브라우저 내부에만</td><td><strong>없음</strong></td></tr>
+        <tr><td>라이선스 키 (구매 시)</td><td>브라우저 내부에만</td>
+            <td><strong>있음</strong> — 유효성 확인을 위해 Lemon Squeezy로</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>라이선스 키를 입력하시면 키와 고정 문자열(<code>chrome-extension</code>)이 결제 대행사인
+  <a href="https://www.lemonsqueezy.com/privacy" rel="noopener">Lemon Squeezy</a>로 전송되어
+  정품 여부를 확인합니다. 확인은 최대 주 1회입니다. 그 외에는 아무것도 함께 보내지 않습니다 —
+  URL도, 속성 정보도, 구글 계정 정보도 포함되지 않습니다.</p>
+  <p>결제는 Lemon Squeezy의 결제 페이지에서 이루어지며 확장 안에서 진행되지 않습니다.
+  카드 정보는 확장이나 개발자가 볼 수 없습니다.</p>
+
+  <h2>하지 않는 것</h2>
+  <ul class="never">
+    <li>URL, 사이트맵, Search Console 데이터를 수집·전송·저장하지 않습니다.</li>
+    <li>구글 계정, 이메일, 다른 구글 서비스에 접근하지 않습니다.</li>
+    <li>분석 도구, 추적 픽셀, 쿠키, 핑거프린팅을 사용하지 않습니다.</li>
+    <li>어떤 데이터도 판매·대여·공유하지 않습니다. 팔 것 자체가 없습니다.</li>
+    <li>Search Console 외의 사이트에서는 동작하지 않습니다.</li>
+  </ul>
+
+  <h2>정보 삭제</h2>
+  <p>저장되는 모든 정보는 브라우저 안에 있습니다. 크롬에서 확장을 삭제하면 전부 함께 지워집니다.
+  확장 화면에서 저장된 작업과 라이선스를 언제든 직접 지우실 수도 있습니다.</p>
+
+  <h2>문의</h2>
+  <p><a href="mailto:lmy8129@gmail.com">lmy8129@gmail.com</a></p>
+
+  <footer>
+    <p>This page is the privacy policy referenced by the Chrome Web Store listing for
+    Bulk URL Removal for Search Console.</p>
+  </footer>
+
+</div>
+</body>
+</html>
