@@ -108,6 +108,15 @@
     line-height:2; margin-top:6px; }
   .langs span { white-space:nowrap; }
 
+  .cta {
+    display:inline-block; margin-top:26px; padding:14px 24px; border-radius:5px;
+    background:var(--ink); color:var(--ground); text-decoration:none;
+    font-family:var(--display); font-weight:600; font-size:1.02rem;
+    transition:opacity .15s;
+  }
+  .cta:hover { opacity:.86; }
+  .cta-note { font-family:var(--mono); font-size:.8rem; color:var(--faint); margin:11px 0 0; }
+
   .status {
     background:var(--sunk); border-radius:5px; padding:15px 17px; margin-top:8px;
   }
@@ -143,6 +152,8 @@
     <p>Google Search Console takes removal requests one at a time. This Chrome extension
     submits a whole list for you, on your own verified property, in your own browser.</p>
     <p class="note">Bulk URL Removal for Search Console</p>
+    <a class="cta" href="https://chromewebstore.google.com/detail/hieocbjhfgcigjiofnaajhniiihbkkij">Add to Chrome — free for 20 URLs</a>
+    <p class="cta-note">Then $19 once. Not a subscription.</p>
   </div>
 
   <section>
@@ -170,20 +181,22 @@
   <section>
     <p class="eyebrow">Measured</p>
     <h2>300 URLs, start to finish</h2>
-    <p>Run on a real Search Console property on 10 September 2026. These are the numbers
+    <p>Run on a real Search Console property on 15 September 2026. These are the numbers
     that run produced, not estimates.</p>
     <div class="scroller">
       <table>
         <tbody>
           <tr><th>Submitted</th><td class="v">300 / 300</td></tr>
-          <tr><th>Succeeded</th><td class="v">300 — 100%</td></tr>
-          <tr><th>Total time</th><td class="v">15.6 min</td></tr>
-          <tr><th>Per URL</th><td class="v">3.13 s</td></tr>
-          <tr><th>Slowest URL</th><td class="v">4.97 s</td></tr>
-          <tr><th>Retries needed</th><td class="v">0</td></tr>
+          <tr><th>Succeeded</th><td class="v">299 — 99.7%</td></tr>
+          <tr><th>Per URL (median)</th><td class="v">4.45 s</td></tr>
+          <tr><th>9 in 10 under</th><td class="v">5.02 s</td></tr>
+          <tr><th>300 URLs</th><td class="v">about 22 min</td></tr>
         </tbody>
       </table>
     </div>
+    <p class="caveat">The one failure was our own bug, found by this run and fixed: a slow
+    reply from Google was read as a failure, so the URL was sent twice and the second try
+    came back as a duplicate. It had in fact gone through.</p>
     <p class="caveat">Google did not rate-limit that run. Your own limit may differ, and the
     extension detects a limit at runtime rather than assuming one — it stops, saves, and
     tells you to come back later.</p>
@@ -226,13 +239,12 @@
   </section>
 
   <section>
-    <p class="eyebrow">Availability</p>
-    <h2>Not on the Chrome Web Store yet</h2>
-    <div class="status">
-      <p>The extension is built and tested but has not been published. It is in review
-      preparation as of September 2026. If you want to be told when it is live, or you want
-      to try it before then, email the address below.</p>
-    </div>
+    <p class="eyebrow">Get it</p>
+    <h2>On the Chrome Web Store</h2>
+    <p>Install it, paste twenty URLs, and see it run before you decide. The free allowance
+    is not a trial with a timer — it is twenty real removals.</p>
+    <a class="cta" href="https://chromewebstore.google.com/detail/hieocbjhfgcigjiofnaajhniiihbkkij">Add to Chrome</a>
+    <p class="cta-note">Chrome, Edge, Brave and other Chromium browsers.</p>
   </section>
 
   <footer>
