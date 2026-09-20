@@ -5,157 +5,120 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Lonebench</title>
 <meta name="description" content="Small software tools, made one at a time. Each one is bought once — no subscriptions, nothing to cancel." />
+<link rel="canonical" href="https://lonebench.com/" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
 <style>
-  :root {
-    --ground:#f8f7f4; --surface:#fffefc; --sunk:#efeeea;
-    --ink:#14171c; --soft:#54595f; --faint:#878c92;
-    --line:#e3e1db; --rule:#cfccc4;
-    --indigo:#1b347a; --ember:#bd4f2b;
-    --step-0:1.0625rem; --step-1:1.25rem; --step-2:1.6rem; --step-3:2.4rem;
-    --display:"Archivo",-apple-system,BlinkMacSystemFont,sans-serif;
-    --body:"Newsreader",Georgia,"Times New Roman",serif;
-    --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --ground:#121418; --surface:#1a1d22; --sunk:#22262b;
-      --ink:#e9eae6; --soft:#a6abb0; --faint:#7c8187;
-      --line:#272b31; --rule:#3a3f46;
-      --indigo:#94adf0; --ember:#dd8a64;
-    }
-  }
-  * { box-sizing:border-box; }
-  html { -webkit-text-size-adjust:100%; }
-  body {
-    margin:0; background:var(--ground); color:var(--ink);
-    font-family:var(--body); font-size:var(--step-0); line-height:1.65;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap { max-width:46rem; margin:0 auto; padding-inline:22px; }
-
-  header { padding-block:34px 0; }
-  .mark {
-    font-family:var(--display); font-weight:700; font-size:.95rem;
-    letter-spacing:.2em; text-transform:uppercase; color:var(--ink);
-    text-decoration:none; display:inline-block; padding-bottom:5px;
-    border-bottom:2px solid var(--ember);
-  }
-
-  .intro { padding-block:60px 52px; }
-  .intro h1 {
-    font-family:var(--display); font-weight:700;
-    font-size:var(--step-3); line-height:1.12; letter-spacing:-.025em;
-    margin:0; max-width:17em; text-wrap:balance;
-  }
-  .intro p {
-    margin:24px 0 0; max-width:33em;
-    font-size:var(--step-1); color:var(--soft); line-height:1.55;
-  }
-
-  section { padding-block:44px; border-top:1px solid var(--line); }
-  .eyebrow {
-    font-family:var(--mono); font-size:.7rem; letter-spacing:.15em;
-    text-transform:uppercase; color:var(--ember); margin:0 0 22px;
-  }
-
-  .tool {
-    display:block; text-decoration:none; color:inherit;
-    background:var(--surface); border:1px solid var(--line);
-    border-radius:4px; padding:24px 26px;
-    transition:border-color .15s ease, transform .15s ease;
-  }
-  .tool:hover { border-color:var(--rule); transform:translateY(-1px); }
-  .tool:focus-visible { outline:2px solid var(--ember); outline-offset:3px; }
-  .tool h2 {
-    font-family:var(--display); font-weight:600; font-size:var(--step-2);
-    line-height:1.22; letter-spacing:-.015em; margin:0; color:var(--indigo);
-  }
-  .tool .meta {
-    font-family:var(--mono); font-size:.72rem; letter-spacing:.06em;
-    text-transform:uppercase; color:var(--faint); margin:9px 0 0;
-  }
-  .tool p.desc { margin:14px 0 0; max-width:36em; color:var(--soft); }
-  .tool .go {
-    font-family:var(--display); font-weight:600; font-size:.9rem;
-    color:var(--indigo); margin:16px 0 0;
-  }
-
-
-  .note { display:block; text-decoration:none; color:inherit; }
-  .note h3 {
-    font-family:var(--display); font-weight:600; font-size:1.12rem;
-    line-height:1.3; margin:0 0 6px; color:var(--indigo);
-  }
-  .note .when {
-    font-family:var(--mono); font-size:.7rem; letter-spacing:.08em;
-    text-transform:uppercase; color:var(--faint); margin:0 0 9px;
-  }
-  .note p.desc { margin:0; color:var(--soft); max-width:36em; }
-  .note:hover h3 { text-decoration:underline; text-underline-offset:.17em; }
-  .note:focus-visible { outline:2px solid var(--ember); outline-offset:4px; border-radius:2px; }
-
-  footer {
-    padding-block:38px 56px; border-top:1px solid var(--line);
-    color:var(--faint); font-size:.92rem;
-  }
-  footer p { max-width:none; margin:0 0 6px; }
-  footer a { color:var(--soft); text-underline-offset:.17em; }
-  footer a:focus-visible { outline:2px solid var(--ember); outline-offset:3px; border-radius:2px; }
-
-  @media (max-width:560px) {
-    :root { --step-3:1.95rem; --step-2:1.35rem; --step-1:1.14rem; }
-    .intro { padding-block:44px 38px; }
-    .tool { padding:20px 20px; }
-  }
+@view-transition { navigation: auto; }
+@property --n     { syntax:'<integer>'; initial-value:0;   inherits:false; }
+@property --angle { syntax:'<angle>';   initial-value:0deg; inherits:false; }
+@property --lift  { syntax:'<length>';  initial-value:0px;  inherits:false; }
+:root{
+  --bg:#07080b; --ink:#f3f5f8; --soft:#9aa4b2; --faint:#5e6773;
+  --line:#191e26; --card:rgba(20,24,32,.6);
+  --g1:#3ddc97; --g2:#5b8cff;
+  --sans:"Space Grotesk",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --spring:linear(0,.26 4.6%,.64 10%,.9 15%,1.02 20%,1.05 26%,1.01 36%,.998 50%,1);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+a:focus-visible{outline:2px solid var(--g1);outline-offset:3px;border-radius:2px}
+h1,h2,h3{text-wrap:balance} p{text-wrap:pretty}
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:60;transform-origin:0 50%;
+  background:linear-gradient(90deg,var(--g1),var(--g2));
+  animation:grow linear both;animation-timeline:scroll(root block)}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.wrap{max-width:64rem;margin:0 auto;padding-inline:26px}
+.nav{display:flex;justify-content:space-between;align-items:center;padding-block:24px}
+.nav a.brand{font-weight:700;text-decoration:none;font-size:1.02rem;view-transition-name:brand}
+.nav span{font-family:var(--mono);font-size:.72rem;color:var(--g1)}
+.btn{position:relative;display:inline-block;text-decoration:none;font-weight:600;
+  font-size:1.02rem;padding:16px 34px;border-radius:99px;color:#05231a;
+  background:linear-gradient(115deg,var(--g1),#7ef0c0);isolation:isolate;
+  transition:--lift .5s var(--spring);translate:0 var(--lift)}
+.btn:hover,.btn:focus-visible{--lift:-4px}
+.btn::before{content:"";position:absolute;inset:-2px;border-radius:99px;z-index:-1;
+  background:conic-gradient(from var(--angle),var(--g1),var(--g2),var(--g1));
+  animation:spin 5s linear infinite;opacity:.65;filter:blur(7px)}
+@keyframes spin{to{--angle:360deg}}
+.rv{animation:rise both cubic-bezier(.22,1,.3,1);animation-timeline:view(block);
+  animation-range:entry 8% cover 34%}
+@keyframes rise{from{opacity:0;translate:0 36px}to{opacity:1;translate:0 0}}
+section{padding-block:88px}
+h2{font-weight:700;font-size:clamp(1.8rem,4.2vw,2.7rem);letter-spacing:-.03em;
+  line-height:1.1;margin:0 0 34px;max-width:19ch}
+footer{border-top:1px solid var(--line);padding-block:28px 56px;color:var(--faint);font-size:.9rem}
+footer a{color:var(--soft)}
+@supports not (animation-timeline: view()){
+  .rv{opacity:1;translate:none;animation:none}.progress{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important}
+  .rv{opacity:1;translate:none}
+}
+.intro{padding-block:80px 30px}
+.intro h1{font-weight:700;font-size:clamp(2.4rem,6.6vw,4.4rem);line-height:1;
+  letter-spacing:-.04em;margin:0 0 20px;max-width:15ch}
+.intro p{margin:0;max-width:46ch;color:var(--soft);font-size:1.1rem}
+.label{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin:0 0 18px}
+.tool{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);
+  border-radius:18px;padding:30px;backdrop-filter:blur(10px);
+  transition:--lift .45s var(--spring),border-color .3s;translate:0 var(--lift)}
+.tool:hover{--lift:-6px;border-color:rgba(61,220,151,.35)}
+.tool h3{margin:0 0 8px;font-size:1.5rem;font-weight:700;letter-spacing:-.02em;
+  view-transition-name:producttitle}
+.tool .kind{font-family:var(--mono);font-size:.74rem;color:var(--g1);margin:0 0 14px}
+.tool p{margin:0;color:var(--soft);max-width:58ch}
+.note{display:block;text-decoration:none;padding-block:20px;border-top:1px solid var(--line)}
+.note h3{margin:0 0 6px;font-size:1.12rem;font-weight:600}
+.note:hover h3{color:var(--g1)}
+.note .when{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin:0 0 8px}
+.note p{margin:0;color:var(--soft);max-width:60ch;font-size:.96rem}
 </style>
 </head>
 <body>
+<div class="progress"></div>
 <div class="wrap">
 
-  <header>
-    <span class="mark">Lonebench</span>
-  </header>
+  <nav class="nav"><a class="brand" href="/">Lonebench</a><span>bought once</span></nav>
 
   <div class="intro">
     <h1>Small software tools, made one at a time.</h1>
-    <p>Each one is bought once. No subscriptions, nothing to cancel,
-    and no account to create.</p>
+    <p>Each one is bought once. No subscriptions, nothing to cancel, and no account
+    to create.</p>
   </div>
 
   <section>
-    <p class="eyebrow">Tools</p>
-
-    <a class="tool" href="/bulk-url-removal/">
-      <h2>Bulk URL Removal for Search Console</h2>
-      <p class="meta">Chrome extension · Free for 20 URLs, then $19 once</p>
-      <p class="desc">Google Search Console takes removal requests one at a time.
-      This submits a whole list for you — on your own verified property, in your own
-      browser. It resumes after failures, shows every result, and exports to CSV.</p>
-      <p class="go">Read more &rarr;</p>
+    <p class="label rv">Tools</p>
+    <a class="tool rv" href="/bulk-url-removal/">
+      <h3>Bulk URL Removal for Search Console</h3>
+      <p class="kind">Chrome extension &nbsp;·&nbsp; free for 20 URLs, then $19 once</p>
+      <p>Google Search Console takes removal requests one at a time. This submits the
+      whole list — on a property you already own, in your own browser. It resumes after
+      failures, shows every result, and exports to CSV.</p>
     </a>
   </section>
 
   <section>
-    <p class="eyebrow">Notes</p>
-
-    <a class="note" href="/notes/search-console-1000-limit/">
+    <p class="label rv">Notes</p>
+    <a class="note rv" href="/notes/search-console-1000-limit/">
       <h3>Is there a 1,000-per-day limit on Search Console removals?</h3>
       <p class="when">20 September 2026</p>
-      <p class="desc">The figure is repeated everywhere, including by Google's own
-      AI Overview. It isn't in Google's documentation. Here is where it does
-      appear, and what 300 real removal requests measured.</p>
+      <p>The figure is repeated everywhere, including by Google's own AI Overview. It
+      isn't in Google's documentation. Here is where it does appear, and what 300 real
+      removal requests measured.</p>
     </a>
   </section>
 
   <footer>
-    <p><strong style="font-family:var(--display);letter-spacing:.12em;color:var(--soft)">LONEBENCH</strong>
-    — one person, a few tools.</p>
-    <p><a href="mailto:lmy8129@gmail.com">lmy8129@gmail.com</a> · <a href="/privacy/">Privacy policy</a></p>
+    <p>Lonebench — one person, a few tools.</p>
+    <p><a href="mailto:lmy8129@gmail.com">lmy8129@gmail.com</a> &nbsp;
+       <a href="/privacy/">Privacy policy</a></p>
   </footer>
-
 </div>
 </body>
 </html>

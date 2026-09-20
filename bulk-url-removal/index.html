@@ -4,256 +4,232 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Bulk URL Removal for Search Console</title>
-<meta name="description" content="Submit Google Search Console removal requests as a list. Resumes after failures, shows every result, exports to CSV. $19 once, no subscription." />
+<meta name="description" content="Search Console takes removal requests one at a time. This extension takes the whole list. 300 URLs in 22 minutes, measured. $19 once." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
 <style>
-  :root {
-    --ground:#f8f7f4; --surface:#fffefc; --sunk:#efeeea;
-    --ink:#14171c; --soft:#54595f; --faint:#878c92;
-    --line:#e3e1db; --rule:#cfccc4;
-    --indigo:#1b347a; --ember:#bd4f2b;
-    --step-0:1.0625rem; --step-1:1.25rem; --step-2:1.6rem; --step-3:2.4rem; --step-4:3.4rem;
-    --display:"Archivo",-apple-system,BlinkMacSystemFont,sans-serif;
-    --body:"Newsreader",Georgia,"Times New Roman",serif;
-    --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --ground:#121418; --surface:#1a1d22; --sunk:#22262b;
-      --ink:#e9eae6; --soft:#a6abb0; --faint:#7c8187;
-      --line:#272b31; --rule:#3a3f46;
-      --indigo:#94adf0; --ember:#dd8a64;
-    }
-  }
-  * { box-sizing:border-box; }
-  html { -webkit-text-size-adjust:100%; }
-  body {
-    margin:0; background:var(--ground); color:var(--ink);
-    font-family:var(--body); font-size:var(--step-0); line-height:1.65;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap { max-width:46rem; margin:0 auto; padding-inline:22px; }
+/* ══ 2026: native scroll-driven animation, no JS ══ */
+@view-transition { navigation: auto; }
 
-  /* masthead */
-  header { padding-block:34px 0; }
-  .mark {
-    font-family:var(--display); font-weight:700; font-size:.95rem;
-    text-decoration:none;
-    letter-spacing:.2em; text-transform:uppercase; color:var(--ink);
-    display:inline-block; padding-bottom:5px;
-    border-bottom:2px solid var(--ember);
-  }
+@property --n     { syntax:'<integer>'; initial-value:0;   inherits:false; }
+@property --angle { syntax:'<angle>';   initial-value:0deg; inherits:false; }
+@property --lift  { syntax:'<length>';  initial-value:0px;  inherits:false; }
 
-  /* hero — the arithmetic is the thesis */
-  .hero { padding-block:60px 52px; }
-  .sum { display:flex; flex-wrap:wrap; align-items:baseline; gap:0 14px; }
-  .sum b {
-    font-family:var(--display); font-weight:700; font-size:var(--step-4);
-    line-height:1.02; letter-spacing:-.03em; font-variant-numeric:tabular-nums;
-  }
-  .sum .eq { color:var(--faint); font-family:var(--display); font-weight:500;
-    font-size:var(--step-2); }
-  .strike b { color:var(--soft); }
-  .strike { margin-bottom:6px; }
-  .keep b { color:var(--indigo); }
-  .hero p {
-    margin:26px 0 0; max-width:33em; font-size:var(--step-1);
-    color:var(--soft); line-height:1.55;
-  }
-  .hero .note { font-size:.95rem; margin-top:14px; color:var(--faint); }
+:root{
+  --bg:#07080b; --ink:#f3f5f8; --soft:#9aa4b2; --faint:#5e6773;
+  --line:#191e26; --card:rgba(20,24,32,.6);
+  --g1:#3ddc97; --g2:#5b8cff;
+  --sans:"Space Grotesk",-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  /* spring-ish easing, CSS linear() */
+  --spring:linear(0,.26 4.6%,.64 10%,.9 15%,1.02 20%,1.05 26%,1.01 36%,.998 50%,1);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+h1,h2,h3{text-wrap:balance}
+p{text-wrap:pretty}
 
-  /* sections */
-  section { padding-block:44px; border-top:1px solid var(--line); }
-  .eyebrow {
-    font-family:var(--mono); font-size:.7rem; letter-spacing:.15em;
-    text-transform:uppercase; color:var(--ember); margin:0 0 10px;
-  }
-  h2 {
-    font-family:var(--display); font-weight:600; font-size:var(--step-2);
-    line-height:1.22; letter-spacing:-.015em; margin:0 0 16px; text-wrap:balance;
-  }
-  h3 { font-family:var(--display); font-weight:600; font-size:1.05rem; margin:0 0 5px; }
-  p { margin:0 0 15px; max-width:34em; }
-  p:last-child { margin-bottom:0; }
-  a { color:var(--indigo); text-underline-offset:.17em; }
-  a:focus-visible { outline:2px solid var(--ember); outline-offset:3px; border-radius:2px; }
-  code, .m { font-family:var(--mono); font-size:.86em; }
+/* ── scroll progress: pure CSS, driven by document scroll ── */
+.progress{
+  position:fixed;top:0;left:0;right:0;height:2px;z-index:60;transform-origin:0 50%;
+  background:linear-gradient(90deg,var(--g1),var(--g2));
+  animation:grow linear both;
+  animation-timeline:scroll(root block);
+}
+@keyframes grow{ from{transform:scaleX(0)} to{transform:scaleX(1)} }
 
-  .points { display:grid; gap:22px; margin-top:4px; }
-  .points p { margin:0; color:var(--soft); }
+.wrap{max-width:64rem;margin:0 auto;padding-inline:26px}
 
-  /* measured table */
-  .scroller { overflow-x:auto; margin:20px 0 14px; }
-  table { border-collapse:collapse; width:100%; font-family:var(--mono); font-size:.82rem; }
-  th, td { text-align:left; padding:9px 12px 9px 0; border-bottom:1px solid var(--line);
-    white-space:nowrap; }
-  th { font-size:.68rem; letter-spacing:.1em; text-transform:uppercase;
-    color:var(--faint); font-weight:500; }
-  td.v { font-variant-numeric:tabular-nums; color:var(--ink); font-weight:500; }
-  tbody tr:last-child td { border-bottom:none; }
-  .caveat { font-size:.9rem; color:var(--faint); max-width:34em; }
+.nav{display:flex;justify-content:space-between;align-items:center;padding-block:24px}
+.nav a{font-weight:700;text-decoration:none;font-size:1.02rem}
+.nav span{font-family:var(--mono);font-size:.72rem;color:var(--g1)}
 
-  /* price */
-  .price { display:flex; flex-wrap:wrap; align-items:baseline; gap:0 12px; margin-bottom:14px; }
-  .price .amt { font-family:var(--display); font-weight:700; font-size:var(--step-3);
-    letter-spacing:-.02em; }
-  .price .per { font-family:var(--display); font-weight:500; color:var(--soft); }
-  .plan { display:grid; gap:9px; margin:18px 0 0; padding:0; list-style:none; }
-  .plan li { display:grid; grid-template-columns:1.1rem 1fr; gap:10px;
-    color:var(--soft); font-size:1rem; }
-  .plan .tick { color:var(--ember); font-family:var(--mono); font-size:.85rem; line-height:1.7; }
+/* ── hero: the sweep is driven by scroll ── */
+.stage{ view-timeline-name:--stage; view-timeline-axis:block; }
+.sticky{position:sticky;top:0;min-height:100svh;display:grid;align-content:center;gap:26px;padding-block:40px}
 
-  .langs { font-family:var(--mono); font-size:.82rem; color:var(--soft);
-    line-height:2; margin-top:6px; }
-  .langs span { white-space:nowrap; }
+h1{
+  font-weight:700;font-size:clamp(2.5rem,7.6vw,5.4rem);line-height:.98;
+  letter-spacing:-.04em;margin:0;max-width:14ch;
+}
+.lede{margin:0;max-width:46ch;color:var(--soft);font-size:1.1rem}
 
-  .cta {
-    display:inline-block; margin-top:26px; padding:14px 24px; border-radius:5px;
-    background:var(--ink); color:var(--ground); text-decoration:none;
-    font-family:var(--display); font-weight:600; font-size:1.02rem;
-    transition:opacity .15s;
-  }
-  .cta:hover { opacity:.86; }
-  .cta-note { font-family:var(--mono); font-size:.8rem; color:var(--faint); margin:11px 0 0; }
+.bars{display:flex;gap:3px;height:150px;align-items:flex-end}
+.bar{
+  flex:1;background:linear-gradient(180deg,var(--g2),var(--g1));border-radius:3px;
+  transform-origin:bottom;
+  animation:fell both cubic-bezier(.3,1.4,.4,1);
+  animation-timeline:--stage;
+  animation-range: contain calc(var(--i) * 1.05%) contain calc(var(--i) * 1.05% + 22%);
+}
+@keyframes fell{ from{transform:scaleY(1);opacity:1} to{transform:scaleY(.04);opacity:.14} }
 
-  .status {
-    background:var(--sunk); border-radius:5px; padding:15px 17px; margin-top:8px;
-  }
-  .status p { margin:0; max-width:none; }
+.count{
+  display:flex;align-items:baseline;gap:12px;
+  font-variant-numeric:tabular-nums;
+}
+.count .num{
+  font-weight:700;font-size:clamp(3.4rem,11vw,7rem);line-height:.9;letter-spacing:-.05em;
+  background:linear-gradient(115deg,var(--g1),var(--g2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  counter-reset: n var(--n);
+  animation:tally linear both;
+  animation-timeline:--stage;
+  animation-range: contain 0% contain 88%;
+}
+.count .num::after{ content: counter(n); }
+.count .of{color:var(--faint);font-family:var(--mono);font-size:.95rem}
+@keyframes tally{ to{ --n:300 } }
 
-  footer {
-    border-top:1px solid var(--rule); padding-block:28px 60px; margin-top:44px;
-    font-size:.88rem; color:var(--faint);
-  }
-  footer p { max-width:none; margin:0 0 6px; }
-  footer a { color:var(--soft); }
+.meta{display:flex;flex-wrap:wrap;gap:8px 26px;font-family:var(--mono);font-size:.76rem;color:var(--faint)}
+.meta b{color:var(--ink);font-weight:500}
 
-  @media (max-width:520px) {
-    :root { --step-4:2.5rem; --step-3:1.9rem; --step-2:1.35rem; }
-    .hero { padding-block:44px 40px; }
-  }
+/* ── CTA with animated conic ring (@property) ── */
+.btn{
+  position:relative;display:inline-block;text-decoration:none;
+  font-weight:600;font-size:1.02rem;padding:16px 34px;border-radius:99px;
+  color:#05231a;background:linear-gradient(115deg,var(--g1),#7ef0c0);
+  isolation:isolate;transition:--lift .5s var(--spring);
+  translate:0 var(--lift);
+}
+.btn:hover,.btn:focus-visible{ --lift:-4px }
+.btn::before{
+  content:"";position:absolute;inset:-2px;border-radius:99px;z-index:-1;
+  background:conic-gradient(from var(--angle),var(--g1),var(--g2),var(--g1));
+  animation:spin 5s linear infinite;opacity:.65;filter:blur(7px);
+}
+@keyframes spin{ to{ --angle:360deg } }
+
+/* ── sections revealed by view() timeline ── */
+section{padding-block:96px}
+.rv{
+  animation:rise both cubic-bezier(.22,1,.3,1);
+  animation-timeline:view(block);
+  animation-range: entry 8% cover 34%;
+}
+@keyframes rise{ from{opacity:0;translate:0 36px} to{opacity:1;translate:0 0} }
+
+h2{font-weight:700;font-size:clamp(1.9rem,4.4vw,2.9rem);letter-spacing:-.03em;line-height:1.08;margin:0 0 40px;max-width:18ch}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;
+  backdrop-filter:blur(10px);transition:--lift .45s var(--spring),border-color .3s;
+  translate:0 var(--lift);
+}
+.card:hover{ --lift:-6px; border-color:rgba(61,220,151,.35) }
+.card h3{margin:0 0 8px;font-size:1.06rem}
+.card p{margin:0;color:var(--soft);font-size:.96rem}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border-radius:16px;overflow:hidden}
+.stat{background:#0d1016;padding:26px 22px}
+.stat b{display:block;font-size:2rem;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;
+  background:linear-gradient(115deg,var(--g1),var(--g2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{color:var(--faint);font-family:var(--mono);font-size:.73rem}
+
+.price{text-align:center;padding-block:100px}
+.price .tag{font-weight:700;font-size:clamp(4rem,13vw,7.5rem);letter-spacing:-.05em;line-height:1;
+  background:linear-gradient(115deg,#fff,var(--g1));-webkit-background-clip:text;background-clip:text;color:transparent}
+.price p{color:var(--soft);margin:12px 0 26px}
+
+footer{border-top:1px solid var(--line);padding-block:28px 56px;color:var(--faint);font-size:.9rem}
+
+/* ── fallbacks ── */
+@supports not (animation-timeline: view()){
+  .bar{transform:scaleY(.04);opacity:.14;animation:none}
+  .count .num{--n:300;animation:none}
+  .rv{opacity:1;translate:none;animation:none}
+  .progress{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important}
+  .bar{transform:scaleY(.04);opacity:.14}
+  .count .num{--n:300}
+  .rv{opacity:1;translate:none}
+}
+@media (max-width:560px){
+  .bars{height:104px;gap:2px}
+  section{padding-block:72px}
+}
 </style>
 </head>
 <body>
+
+<div class="progress"></div>
+
 <div class="wrap">
 
-  <header>
-    <a class="mark" href="/">LONEBENCH</a>
-  </header>
+  <nav class="nav">
+    <a href="/">Lonebench</a>
+    <span>$19 once</span>
+  </nav>
 
-  <div class="hero">
-    <div class="sum strike">
-      <b>300 URLs</b><span class="eq">=</span><b>1,500 clicks</b>
+  <!-- the hero occupies extra height; scrolling through it drives the sweep -->
+  <div class="stage" style="height:230svh">
+    <div class="sticky">
+      <h1>Search Console removes one URL at a time.</h1>
+      <p class="lede">This extension takes the whole list. Scroll, and watch three
+      hundred of them go.</p>
+
+      <div class="bars">
+        <i class="bar" style="--i:0;height:42%"></i><i class="bar" style="--i:1;height:59%"></i><i class="bar" style="--i:2;height:73%"></i><i class="bar" style="--i:3;height:82%"></i><i class="bar" style="--i:4;height:60%"></i><i class="bar" style="--i:5;height:58%"></i><i class="bar" style="--i:6;height:61%"></i><i class="bar" style="--i:7;height:78%"></i><i class="bar" style="--i:8;height:65%"></i><i class="bar" style="--i:9;height:72%"></i><i class="bar" style="--i:10;height:74%"></i><i class="bar" style="--i:11;height:71%"></i><i class="bar" style="--i:12;height:54%"></i><i class="bar" style="--i:13;height:70%"></i><i class="bar" style="--i:14;height:81%"></i><i class="bar" style="--i:15;height:61%"></i><i class="bar" style="--i:16;height:61%"></i><i class="bar" style="--i:17;height:58%"></i><i class="bar" style="--i:18;height:73%"></i><i class="bar" style="--i:19;height:62%"></i><i class="bar" style="--i:20;height:71%"></i><i class="bar" style="--i:21;height:76%"></i><i class="bar" style="--i:22;height:74%"></i><i class="bar" style="--i:23;height:48%"></i><i class="bar" style="--i:24;height:65%"></i><i class="bar" style="--i:25;height:79%"></i><i class="bar" style="--i:26;height:61%"></i><i class="bar" style="--i:27;height:64%"></i><i class="bar" style="--i:28;height:62%"></i><i class="bar" style="--i:29;height:67%"></i><i class="bar" style="--i:30;height:58%"></i><i class="bar" style="--i:31;height:70%"></i><i class="bar" style="--i:32;height:76%"></i><i class="bar" style="--i:33;height:77%"></i><i class="bar" style="--i:34;height:48%"></i><i class="bar" style="--i:35;height:60%"></i><i class="bar" style="--i:36;height:76%"></i><i class="bar" style="--i:37;height:86%"></i><i class="bar" style="--i:38;height:65%"></i><i class="bar" style="--i:39;height:65%"></i><i class="bar" style="--i:40;height:62%"></i><i class="bar" style="--i:41;height:53%"></i><i class="bar" style="--i:42;height:67%"></i><i class="bar" style="--i:43;height:76%"></i><i class="bar" style="--i:44;height:80%"></i><i class="bar" style="--i:45;height:52%"></i><i class="bar" style="--i:46;height:55%"></i><i class="bar" style="--i:47;height:72%"></i><i class="bar" style="--i:48;height:85%"></i><i class="bar" style="--i:49;height:66%"></i><i class="bar" style="--i:50;height:67%"></i><i class="bar" style="--i:51;height:65%"></i><i class="bar" style="--i:52;height:48%"></i><i class="bar" style="--i:53;height:64%"></i><i class="bar" style="--i:54;height:75%"></i><i class="bar" style="--i:55;height:81%"></i><i class="bar" style="--i:56;height:55%"></i><i class="bar" style="--i:57;height:52%"></i><i class="bar" style="--i:58;height:67%"></i><i class="bar" style="--i:59;height:82%"></i><i class="bar" style="--i:60;height:65%"></i><i class="bar" style="--i:61;height:69%"></i><i class="bar" style="--i:62;height:68%"></i><i class="bar" style="--i:63;height:68%"></i><i class="bar" style="--i:64;height:59%"></i><i class="bar" style="--i:65;height:73%"></i><i class="bar" style="--i:66;height:81%"></i><i class="bar" style="--i:67;height:58%"></i><i class="bar" style="--i:68;height:55%"></i><i class="bar" style="--i:69;height:61%"></i><i class="bar" style="--i:70;height:78%"></i><i class="bar" style="--i:71;height:64%"></i>
+      </div>
+
+      <div class="count"><span class="num"></span><span class="of">of 300 removed</span></div>
+
+      <div class="meta">
+        <span>median <b>4.45s</b></span>
+        <span>p90 <b>5.02s</b></span>
+        <span>total <b>22 min</b></span>
+        <span>measured <b>15 Sep 2026</b></span>
+      </div>
+
+      <div><a class="btn" href="https://chromewebstore.google.com/detail/hieocbjhfgcigjiofnaajhniiihbkkij">Add to Chrome</a></div>
     </div>
-    <div class="sum keep">
-      <b>300 URLs</b><span class="eq">=</span><b>one paste</b>
-    </div>
-    <p>Google Search Console takes removal requests one at a time. This Chrome extension
-    submits a whole list for you, on your own verified property, in your own browser.</p>
-    <p class="note">Bulk URL Removal for Search Console</p>
-    <a class="cta" href="https://chromewebstore.google.com/detail/hieocbjhfgcigjiofnaajhniiihbkkij">Add to Chrome — free for 20 URLs</a>
-    <p class="cta-note">Then $19 once. Not a subscription.</p>
   </div>
 
   <section>
-    <p class="eyebrow">What it does</p>
-    <h2>Three things the free tools get wrong</h2>
-    <div class="points">
-      <div>
-        <h3>It finishes</h3>
-        <p>Progress is saved after every single URL. Close the tab, lose the connection,
-        hit Google's limit — nothing is lost, and you resume from where it stopped.</p>
-      </div>
-      <div>
-        <h3>It shows you everything</h3>
-        <p>Live count, successes, failures, and a plain-language reason for each failure.
-        Export the whole result as CSV when it's done.</p>
-      </div>
-      <div>
-        <h3>The price is on the first screen</h3>
-        <p>Twenty URLs free, then one payment. No subscription, no trial that starts
-        billing, nothing to cancel.</p>
-      </div>
+    <h2 class="rv">Three things the free tools get wrong</h2>
+    <div class="cards">
+      <div class="card rv"><h3>They lose the run</h3><p>Progress is written after every
+      single URL. Close the tab, drop the connection, hit a limit — you resume from the
+      next URL, not the first.</p></div>
+      <div class="card rv"><h3>They go quiet on failure</h3><p>Every failure gets a
+      reason you can read. Duplicate request, URL outside your property, an address that
+      doesn't parse. All of it exports to CSV.</p></div>
+      <div class="card rv"><h3>The price arrives later</h3><p>Twenty URLs free so you
+      can watch it finish first. Then one payment. No trial that quietly starts billing.</p></div>
     </div>
   </section>
 
   <section>
-    <p class="eyebrow">Measured</p>
-    <h2>300 URLs, start to finish</h2>
-    <p>Run on a real Search Console property on 15 September 2026. These are the numbers
-    that run produced, not estimates.</p>
-    <div class="scroller">
-      <table>
-        <tbody>
-          <tr><th>Submitted</th><td class="v">300 / 300</td></tr>
-          <tr><th>Succeeded</th><td class="v">299 — 99.7%</td></tr>
-          <tr><th>Per URL (median)</th><td class="v">4.45 s</td></tr>
-          <tr><th>9 in 10 under</th><td class="v">5.02 s</td></tr>
-          <tr><th>300 URLs</th><td class="v">about 22 min</td></tr>
-        </tbody>
-      </table>
+    <h2 class="rv">What 300 URLs actually did</h2>
+    <div class="stats rv">
+      <div class="stat"><b>300</b><span>submitted</span></div>
+      <div class="stat"><b>99.7%</b><span>succeeded</span></div>
+      <div class="stat"><b>4.45s</b><span>median / URL</span></div>
+      <div class="stat"><b>22m</b><span>whole run</span></div>
     </div>
-    <p class="caveat">The one failure was our own bug, found by this run and fixed: a slow
-    reply from Google was read as a failure, so the URL was sent twice and the second try
-    came back as a duplicate. It had in fact gone through.</p>
-    <p class="caveat">Google did not rate-limit that run. Your own limit may differ, and the
-    extension detects a limit at runtime rather than assuming one — it stops, saves, and
-    tells you to come back later.</p>
+    <p class="rv" style="color:var(--soft);margin-top:24px;max-width:62ch">One run on a
+    real property. The single failure was a bug in this extension, found by that run and
+    fixed. Google did not rate-limit it — and the extension detects a limit when it
+    happens rather than assuming a number.</p>
   </section>
 
-  <section>
-    <p class="eyebrow">Scope</p>
-    <h2>Both removal types, either scope</h2>
-    <p><span class="m">Temporarily remove URL</span> and <span class="m">Clear snippet</span>,
-    each for a single URL or a whole prefix. Removals last about six months — the extension
-    says so on the screen where you start, because that surprises people.</p>
-    <p>It runs only on Search Console. It reads nothing else, sends your URL list nowhere,
-    and has no account to sign up for.
-    <a href="/privacy/">Privacy policy</a>.</p>
-  </section>
+  <div class="price">
+    <div class="tag rv">$19</div>
+    <p class="rv">Once. Three computers. Nothing to cancel.</p>
+    <a class="btn rv" href="https://chromewebstore.google.com/detail/hieocbjhfgcigjiofnaajhniiihbkkij">Add to Chrome</a>
+  </div>
 
-  <section>
-    <p class="eyebrow">Price</p>
-    <h2>Nineteen dollars, once</h2>
-    <div class="price">
-      <span class="amt">$19</span><span class="per">one time</span>
-    </div>
-    <ul class="plan">
-      <li><span class="tick">—</span><span>First 20 URLs free, so you can see it work before paying</span></li>
-      <li><span class="tick">—</span><span>Then unlimited, forever, on that licence</span></li>
-      <li><span class="tick">—</span><span>Not a subscription. There is nothing to cancel</span></li>
-    </ul>
-  </section>
-
-  <section>
-    <p class="eyebrow">Languages</p>
-    <h2>Seven, and it does not care about yours</h2>
-    <p>The interface is translated, and the automation itself never matches on button text —
-    it finds the page by structure. It works the same whatever language your browser is set to.</p>
-    <p class="langs">
-      <span>English</span> · <span>한국어</span> · <span>日本語</span> ·
-      <span>Español</span> · <span>Português (BR)</span> · <span>Deutsch</span> ·
-      <span>Русский</span>
-    </p>
-  </section>
-
-  <section>
-    <p class="eyebrow">Get it</p>
-    <h2>On the Chrome Web Store</h2>
-    <p>Install it, paste twenty URLs, and see it run before you decide. The free allowance
-    is not a trial with a timer — it is twenty real removals.</p>
-    <a class="cta" href="https://chromewebstore.google.com/detail/hieocbjhfgcigjiofnaajhniiihbkkij">Add to Chrome</a>
-    <p class="cta-note">Chrome, Edge, Brave and other Chromium browsers.</p>
-  </section>
-
-  <footer>
-    <p><strong style="font-family:var(--display);letter-spacing:.12em;color:var(--soft)">LONEBENCH</strong>
-    — software for people who run their own websites.</p>
-    <p><a href="mailto:lmy8129@gmail.com">lmy8129@gmail.com</a> · <a href="/privacy/">Privacy policy</a></p>
-  </footer>
-
+  <footer>Lonebench — small software tools, made one at a time. lmy8129@gmail.com</footer>
 </div>
+
 </body>
 </html>
