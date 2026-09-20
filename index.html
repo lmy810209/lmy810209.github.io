@@ -83,6 +83,20 @@
     color:var(--indigo); margin:16px 0 0;
   }
 
+
+  .note { display:block; text-decoration:none; color:inherit; }
+  .note h3 {
+    font-family:var(--display); font-weight:600; font-size:1.12rem;
+    line-height:1.3; margin:0 0 6px; color:var(--indigo);
+  }
+  .note .when {
+    font-family:var(--mono); font-size:.7rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--faint); margin:0 0 9px;
+  }
+  .note p.desc { margin:0; color:var(--soft); max-width:36em; }
+  .note:hover h3 { text-decoration:underline; text-underline-offset:.17em; }
+  .note:focus-visible { outline:2px solid var(--ember); outline-offset:4px; border-radius:2px; }
+
   footer {
     padding-block:38px 56px; border-top:1px solid var(--line);
     color:var(--faint); font-size:.92rem;
@@ -121,6 +135,18 @@
       This submits a whole list for you — on your own verified property, in your own
       browser. It resumes after failures, shows every result, and exports to CSV.</p>
       <p class="go">Read more &rarr;</p>
+    </a>
+  </section>
+
+  <section>
+    <p class="eyebrow">Notes</p>
+
+    <a class="note" href="/notes/search-console-1000-limit/">
+      <h3>Is there a 1,000-per-day limit on Search Console removals?</h3>
+      <p class="when">20 September 2026</p>
+      <p class="desc">The figure is repeated everywhere, including by Google's own
+      AI Overview. It isn't in Google's documentation. Here is where it does
+      appear, and what 300 real removal requests measured.</p>
     </a>
   </section>
 
