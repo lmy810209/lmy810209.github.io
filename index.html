@@ -4,111 +4,124 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Lonebench — tools you buy once</title>
-<meta name="description" content="Small software tools, made one at a time. Each one is bought once — no subscriptions, nothing to cancel, no account to create." />
+<meta name="description" content="Small software tools, made one at a time, by one person. Each one is bought once — no subscriptions, nothing to cancel, no account to create." />
 <link rel="canonical" href="https://lonebench.com/" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
 <style>
 @view-transition { navigation: auto; }
-@property --n     { syntax:'<integer>'; initial-value:0;   inherits:false; }
-@property --angle { syntax:'<angle>';   initial-value:0deg; inherits:false; }
-@property --lift  { syntax:'<length>';  initial-value:0px;  inherits:false; }
+@property --lift { syntax:'<length>'; initial-value:0px; inherits:false; }
 :root{
-  --bg:#07080b; --ink:#f3f5f8; --soft:#9aa4b2; --faint:#5e6773;
-  --line:#191e26; --card:rgba(20,24,32,.6);
+  --bg:#07080b; --ink:#f3f5f8; --soft:#a4adba; --faint:#6a7380;
+  --line:rgba(255,255,255,.08); --glass:rgba(12,14,19,.62);
   --g1:#3ddc97; --g2:#5b8cff;
   --sans:"Space Grotesk",-apple-system,BlinkMacSystemFont,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
   --spring:linear(0,.26 4.6%,.64 10%,.9 15%,1.02 20%,1.05 26%,1.01 36%,.998 50%,1);
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
-  font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+html{background:var(--bg)}
+body{margin:0;color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;background:transparent}
 a{color:inherit}
 a:focus-visible{outline:2px solid var(--g1);outline-offset:3px;border-radius:2px}
 h1,h2,h3{text-wrap:balance} p{text-wrap:pretty}
-.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:60;transform-origin:0 50%;
-  background:linear-gradient(90deg,var(--g1),var(--g2));
-  animation:grow linear both;animation-timeline:scroll(root block)}
-@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-.wrap{max-width:64rem;margin:0 auto;padding-inline:26px}
+
+/* the 3D room sits behind everything */
+#scene{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block;
+  opacity:0;transition:opacity 1.2s ease}
+.webgl-ready #scene{opacity:1}
+.no-webgl body{background:radial-gradient(ellipse at 60% 30%,#1b1f28,#07080b 70%)}
+.veil{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(7,8,11,.55) 0%,rgba(7,8,11,0) 22%,rgba(7,8,11,0) 55%,rgba(7,8,11,.78) 100%)}
+
+.wrap{position:relative;z-index:2;max-width:64rem;margin:0 auto;padding-inline:26px}
 .nav{display:flex;justify-content:space-between;align-items:center;padding-block:24px}
-.nav a.brand{font-weight:700;text-decoration:none;font-size:1.02rem;view-transition-name:brand}
+.nav a{font-weight:700;text-decoration:none;font-size:1.02rem;letter-spacing:-.01em}
 .nav span{font-family:var(--mono);font-size:.72rem;color:var(--g1)}
-.btn{position:relative;display:inline-block;text-decoration:none;font-weight:600;
-  font-size:1.02rem;padding:16px 34px;border-radius:99px;color:#05231a;
-  background:linear-gradient(115deg,var(--g1),#7ef0c0);isolation:isolate;
-  transition:--lift .5s var(--spring);translate:0 var(--lift)}
-.btn:hover,.btn:focus-visible{--lift:-4px}
-.btn::before{content:"";position:absolute;inset:-2px;border-radius:99px;z-index:-1;
-  background:conic-gradient(from var(--angle),var(--g1),var(--g2),var(--g1));
-  animation:spin 5s linear infinite;opacity:.65;filter:blur(7px)}
-@keyframes spin{to{--angle:360deg}}
-.rv{animation:rise both cubic-bezier(.22,1,.3,1);animation-timeline:view(block);
-  animation-range:entry 8% cover 34%}
-@keyframes rise{from{opacity:0;translate:0 36px}to{opacity:1;translate:0 0}}
-section{padding-block:88px}
-h2{font-weight:700;font-size:clamp(1.8rem,4.2vw,2.7rem);letter-spacing:-.03em;
-  line-height:1.1;margin:0 0 34px;max-width:19ch}
-footer{border-top:1px solid var(--line);padding-block:28px 56px;color:var(--faint);font-size:.9rem}
-footer a{color:var(--soft)}
-@supports not (animation-timeline: view()){
-  .rv{opacity:1;translate:none;animation:none}.progress{display:none}
-}
-@media (prefers-reduced-motion:reduce){
-  *{animation-duration:.001ms !important;animation-iteration-count:1 !important}
-  .rv{opacity:1;translate:none}
-}
-section{padding-block:38px}
-.intro{padding-block:56px 22px}
-.intro h1{font-weight:700;font-size:clamp(2.3rem,6vw,4rem);line-height:1;
-  letter-spacing:-.04em;margin:0 0 20px;max-width:14ch}
-.intro p{margin:0;max-width:48ch;color:var(--soft);font-size:1.1rem}
-.label{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin:0 0 16px;
-  padding-top:28px;border-top:1px solid var(--line)}
-.tool{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);
-  border-radius:18px;padding:32px;backdrop-filter:blur(10px);
-  transition:--lift .45s var(--spring),border-color .3s;translate:0 var(--lift)}
-.tool:hover{--lift:-6px;border-color:rgba(61,220,151,.4)}
-.tool h3{margin:0 0 9px;font-size:1.6rem;font-weight:700;letter-spacing:-.025em}
-.tool .kind{font-family:var(--mono);font-size:.74rem;color:var(--g1);margin:0 0 16px}
-.tool p{margin:0 0 22px;color:var(--soft);max-width:58ch}
-.figs{display:flex;flex-wrap:wrap;gap:0;border-top:1px solid var(--line);padding-top:18px}
-.figs div{padding-right:34px}
-.figs b{display:block;font-size:1.3rem;font-weight:700;letter-spacing:-.02em;
-  font-variant-numeric:tabular-nums;
-  background:linear-gradient(115deg,var(--g1),var(--g2));
-  -webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* hero: text anchored low, the bench owns the frame */
+.hero{min-height:calc(100svh - 76px);display:flex;flex-direction:column;justify-content:flex-end;
+  padding-bottom:9vh}
+.hero h1{font-weight:700;font-size:clamp(2.8rem,8.4vw,6.4rem);line-height:.95;letter-spacing:-.045em;
+  margin:0 0 20px;max-width:10ch}
+.hero p{margin:0;max-width:40ch;color:var(--soft);font-size:1.1rem}
+.cue{margin-top:34px;font-family:var(--mono);font-size:.7rem;color:var(--faint);display:flex;gap:10px;align-items:center}
+.cue i{display:block;width:1px;height:26px;background:linear-gradient(var(--g1),transparent);
+  animation:drop 2.2s ease-in-out infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}
+  51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+.gap{height:62svh}
+
+/* content panels float over the room */
+.panel{background:var(--glass);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);
+  border:1px solid var(--line);border-radius:22px;padding:34px}
+.label{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin:0 0 18px}
+.tool{display:block;text-decoration:none;transition:--lift .45s var(--spring);translate:0 var(--lift)}
+.tool:hover{--lift:-5px}
+.tool h2{margin:0 0 9px;font-size:clamp(1.5rem,3.4vw,2rem);font-weight:700;letter-spacing:-.025em;line-height:1.1}
+.kind{font-family:var(--mono);font-size:.74rem;color:var(--g1);margin:0 0 16px}
+.tool p{margin:0 0 24px;color:var(--soft);max-width:58ch}
+.figs{display:flex;flex-wrap:wrap;gap:14px 36px;border-top:1px solid var(--line);padding-top:20px}
+.figs b{display:block;font-size:1.35rem;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;
+  background:linear-gradient(115deg,var(--g1),var(--g2));-webkit-background-clip:text;background-clip:text;color:transparent}
 .figs span{font-family:var(--mono);font-size:.68rem;color:var(--faint)}
-.more{display:inline-block;margin-top:20px;font-weight:600;color:var(--g1);font-size:.96rem}
-.note{display:block;text-decoration:none;padding-block:16px 4px}
+.more{display:inline-block;margin-top:22px;font-weight:600;color:var(--g1)}
+.more::after{content:"";display:inline-block;width:18px;height:1px;background:currentColor;
+  vertical-align:middle;margin-left:10px;transition:width .4s var(--spring)}
+.tool:hover .more::after{width:30px}
+
+.notes{margin-top:18px}
+.note{display:block;text-decoration:none}
 .note h3{margin:0 0 6px;font-size:1.12rem;font-weight:600}
 .note:hover h3{color:var(--g1)}
 .note .when{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin:0 0 8px}
-.note p{margin:0;color:var(--soft);max-width:60ch;font-size:.96rem}
+.note p{margin:0;color:var(--soft);max-width:62ch;font-size:.96rem}
+
+footer{margin-top:18px;padding:26px 34px 60px;color:var(--faint);font-size:.9rem}
+footer p{margin:0 0 6px} footer a{color:var(--soft)}
+
+/* panels rise into place as they arrive (native, no JS) */
+.rise{animation:rise both cubic-bezier(.22,1,.3,1);animation-timeline:view(block);animation-range:entry 5% cover 30%}
+@keyframes rise{from{opacity:0;translate:0 44px}to{opacity:1;translate:0 0}}
+@supports not (animation-timeline:view()){.rise{animation:none}}
+
+@media (max-width:640px){
+  .panel{padding:24px;border-radius:18px}
+  .hero{padding-bottom:7vh}
+  .gap{height:44svh}
+}
+@media (prefers-reduced-motion:reduce){
+  .rise,.cue i{animation:none}
+}
 </style>
 </head>
 <body>
-<div class="progress"></div>
+<canvas id="scene" aria-hidden="true"></canvas>
+<div class="veil"></div>
+
 <div class="wrap">
+  <nav class="nav"><a href="/">Lonebench</a><span>bought once</span></nav>
 
-  <nav class="nav"><a class="brand" href="/">Lonebench</a><span>bought once</span></nav>
-
-  <div class="intro">
+  <header class="hero">
     <h1>Tools you buy once.</h1>
-    <p>Small software, made one at a time, by one person. No subscriptions, nothing to
-    cancel, and no account to create.</p>
-  </div>
+    <p>Small software, made one at a time, by one person. No subscriptions,
+    nothing to cancel, and no account to create.</p>
+    <div class="cue"><i></i>scroll</div>
+  </header>
 
-  <section>
-    <p class="label rv">Tools</p>
-    <a class="tool rv" href="/bulk-url-removal/">
-      <h3>Bulk URL Removal for Search Console</h3>
+  <div class="gap"></div>
+
+  <section class="panel rise">
+    <p class="label">Tools</p>
+    <a class="tool" href="/bulk-url-removal/">
+      <h2>Bulk URL Removal for Search Console</h2>
       <p class="kind">Chrome extension &nbsp;·&nbsp; free for 20 URLs, then $19 once</p>
-      <p>Google Search Console takes removal requests one at a time. This submits the
-      whole list — on a property you already own, in your own browser. It saves after
-      every URL, shows why each failure failed, and exports the result to CSV.</p>
+      <p>Google Search Console takes removal requests one at a time. This submits the whole
+      list — on a property you already own, in your own browser. It saves after every URL,
+      shows why each failure failed, and exports the result to CSV.</p>
       <div class="figs">
         <div><b>300</b><span>URLs in one run</span></div>
         <div><b>22 min</b><span>start to finish</span></div>
@@ -119,22 +132,23 @@ section{padding-block:38px}
     </a>
   </section>
 
-  <section>
-    <p class="label rv">Notes</p>
-    <a class="note rv" href="/notes/search-console-1000-limit/">
+  <section class="panel notes rise">
+    <p class="label">Notes</p>
+    <a class="note" href="/notes/search-console-1000-limit/">
       <h3>Is there a 1,000-per-day limit on Search Console removals?</h3>
       <p class="when">20 September 2026</p>
-      <p>The figure is repeated everywhere, including by Google's own AI Overview. It
-      isn't in Google's documentation. Here is where it does appear, and what 300 real
-      removal requests measured.</p>
+      <p>The figure is repeated everywhere, including by Google's own AI Overview. It isn't
+      in Google's documentation. Here is where it does appear, and what 300 real removal
+      requests measured.</p>
     </a>
   </section>
 
   <footer>
-    <p>Lonebench — one person, a few tools.</p>
-    <p><a href="mailto:lmy8129@gmail.com">lmy8129@gmail.com</a> &nbsp;
-       <a href="/privacy/">Privacy policy</a></p>
+    <p>Lonebench — one person, one bench, a few tools.</p>
+    <p><a href="mailto:lmy8129@gmail.com">lmy8129@gmail.com</a> &nbsp; <a href="/privacy/">Privacy policy</a></p>
   </footer>
 </div>
+
+<script type="module" src="/bench.js"></script>
 </body>
 </html>
