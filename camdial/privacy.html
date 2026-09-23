@@ -1,167 +1,131 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CamDial — Privacy Policy</title>
-<meta name="description" content="CamDial collects no data. It has no network access and never opens a video stream.">
-<link rel="canonical" href="https://lonebench.com/camdial/privacy.html">
+<meta name="description" content="Privacy policy for CamDial: no data collected, no network access, no video stream." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
 <style>
-:root {
-  --ink: #14201d;
-  --muted: #5c6b67;
-  --faint: #8a9793;
-  --bg: #ffffff;
-  --panel: #f4f7f6;
-  --line: #e2e9e7;
-  --brand: #0a8282;
-  --brand-deep: #075a5a;
-  --brand-lit: #2fd1d1;
+@view-transition { navigation: auto; }
+@property --lift { syntax:'<length>'; initial-value:0px; inherits:false; }
+@property --angle { syntax:'<angle>'; initial-value:0deg; inherits:false; }
+:root{
+  --bg:#07080b; --ink:#f3f5f8; --soft:#a4adba; --faint:#6a7380;
+  --line:rgba(255,255,255,.08); --glass:rgba(12,14,19,.64);
+  --g1:#3ddc97; --g2:#5b8cff; --teal:#2FD1D1;
+  --sans:"Space Grotesk",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --spring:linear(0,.26 4.6%,.64 10%,.9 15%,1.02 20%,1.05 26%,1.01 36%,.998 50%,1);
 }
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+a:focus-visible{outline:2px solid var(--g1);outline-offset:3px;border-radius:2px}
+h1,h2,h3{text-wrap:balance} p{text-wrap:pretty}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ink: #e8efec;
-    --muted: #a3b2ad;
-    --faint: #7d8d88;
-    --bg: #0f1513;
-    --panel: #18201e;
-    --line: #26302d;
-    --brand: #2fd1d1;
-    --brand-deep: #075a5a;
-    --brand-lit: #1fb0b0;
-  }
+.bgfield{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(60rem 40rem at 72% 12%, rgba(47,209,209,.16), transparent 62%),
+    radial-gradient(48rem 36rem at 12% 78%, rgba(91,140,255,.10), transparent 64%),
+    radial-gradient(ellipse at 60% 30%, #12161d, var(--bg) 72%)}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.45;
+  background-image:radial-gradient(rgba(255,255,255,.055) 1px, transparent 1px);
+  background-size:3px 3px;mix-blend-mode:screen}
+
+.wrap{position:relative;z-index:2;max-width:64rem;margin:0 auto;padding-inline:26px}
+.nav{position:sticky;top:0;z-index:5;padding:22px 0;display:flex;justify-content:space-between;align-items:center;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.nav a.brand{font-weight:700;text-decoration:none;font-size:1.02rem}
+.nav span{font-family:var(--mono);font-size:.72rem;color:var(--g1)}
+
+.hero{padding:76px 0 54px;display:flex;flex-direction:column;align-items:flex-start}
+.mark{width:72px;height:72px;border-radius:19px;display:grid;place-items:center;margin-bottom:26px;
+  background:linear-gradient(150deg,#17B3B3,#0A7A7A);
+  box-shadow:0 18px 40px -18px rgba(47,209,209,.7), inset 0 1px 0 rgba(255,255,255,.28)}
+.hero h1{font-weight:700;font-size:clamp(2.6rem,6.4vw,4.4rem);line-height:.98;letter-spacing:-.04em;margin:0 0 16px}
+.hero .lede{margin:0 0 30px;color:var(--soft);font-size:1.08rem;max-width:40ch}
+
+.langs{display:flex;gap:8px}
+.langs button{font-family:var(--mono);font-size:.76rem;letter-spacing:.02em;cursor:pointer;
+  padding:9px 16px;border-radius:99px;border:1px solid var(--line);background:rgba(255,255,255,.04);
+  color:var(--soft);transition:color .2s,border-color .2s,background .2s}
+.langs button:hover{color:var(--ink);border-color:rgba(255,255,255,.2)}
+.langs button[aria-pressed="true"]{background:linear-gradient(115deg,var(--g1),#7ef0c0);color:#05231a;border-color:transparent;font-weight:500}
+
+.panel{background:var(--glass);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);
+  border:1px solid var(--line);border-radius:22px;padding:36px;margin-bottom:18px}
+.panel h2{font-weight:700;font-size:clamp(1.6rem,3.6vw,2.3rem);letter-spacing:-.03em;line-height:1.1;margin:0 0 22px;max-width:20ch}
+.panel > p{color:var(--soft);max-width:64ch;margin:0 0 18px}
+.panel > p:last-child{margin-bottom:0}
+.panel strong{color:var(--ink);font-weight:500}
+.panel a{color:var(--g1);text-decoration:none;border-bottom:1px solid rgba(61,220,151,.35)}
+.panel a:hover{border-bottom-color:var(--g1)}
+
+.mailbox{border:1px solid var(--line);border-radius:16px;padding:26px;background:rgba(255,255,255,.025)}
+.mailbox p{margin:0 0 14px;color:var(--soft)}
+.mailbox p:last-child{margin-bottom:0}
+.mail{display:inline-block;font-family:var(--mono);font-size:1.06rem;color:var(--g1)!important;
+  text-decoration:none;border-bottom:1px solid rgba(61,220,151,.45)!important}
+.note{font-size:.9rem;color:var(--faint)!important}
+
+.qa{border-top:1px solid var(--line);padding-top:22px;margin-top:22px}
+.qa:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.qa h3{margin:0 0 8px;font-size:1.06rem;font-weight:600;letter-spacing:-.01em}
+.qa p{margin:0;color:var(--soft);font-size:.97rem;max-width:64ch}
+
+footer{position:relative;z-index:2;border-top:1px solid var(--line);margin-top:42px;
+  padding:26px 0 64px;color:var(--faint);font-size:.9rem;
+  display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center}
+footer a{color:var(--soft);text-decoration:none}
+footer a:hover{color:var(--ink)}
+footer .sp{margin-left:auto;font-family:var(--mono);font-size:.76rem}
+
+.lead{font-size:1.12rem;color:var(--ink);max-width:58ch;margin:0 0 26px;padding-left:16px;
+  border-left:2px solid var(--g1)}
+section > p.meta{font-family:var(--mono);font-size:.78rem;color:var(--faint);margin:22px 0 0}
+.card{border:1px solid var(--line);border-radius:16px;padding:26px;background:rgba(255,255,255,.025)}
+.card p{margin:0 0 14px;color:var(--soft)} .card p:last-child{margin-bottom:0}
+.card p.meta{font-size:.9rem;color:var(--faint)}
+code{font-family:var(--mono);font-size:.86em;background:rgba(255,255,255,.07);
+  padding:2px 7px;border-radius:5px;color:var(--ink);word-break:break-all}
+.panel ul{margin:0;padding-left:1.1em;color:var(--soft)} .panel li{margin-bottom:6px}
+
+/* privacy reads as a document, not a stack of heroes */
+body.doc .panel{padding:28px 32px;margin-bottom:12px}
+body.doc .panel h2{font-size:clamp(1.25rem,2.4vw,1.62rem);max-width:34ch;margin:0 0 14px;letter-spacing:-.02em}
+body.doc .panel > p{font-size:.98rem}
+@media (max-width:700px){ body.doc .panel{padding:22px} }
+
+.rise{animation:rise both cubic-bezier(.22,1,.3,1);animation-timeline:view(block);animation-range:entry 5% cover 28%}
+@keyframes rise{from{opacity:0;translate:0 44px}to{opacity:1;translate:0 0}}
+@supports not (animation-timeline:view()){.rise{animation:none}}
+
+@media (max-width:700px){
+  body{font-size:16px}
+  .hero{padding:52px 0 40px}
+  .panel{padding:24px;border-radius:18px}
+  footer .sp{margin-left:0;width:100%}
 }
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        "Helvetica Neue", Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-}
-
-.hero {
-  background: linear-gradient(160deg, var(--brand-deep), var(--brand-lit));
-  color: #fff;
-  padding: 68px 24px 60px;
-  text-align: center;
-}
-
-.hero .mark {
-  width: 76px; height: 76px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, .14);
-  border: 1px solid rgba(255, 255, 255, .28);
-  display: inline-flex; align-items: center; justify-content: center;
-  margin-bottom: 20px;
-}
-
-.hero .mark svg { display: block; }
-
-.hero h1 {
-  margin: 0 0 10px;
-  font-size: 40px;
-  font-weight: 600;
-  letter-spacing: -.02em;
-}
-
-.hero p {
-  margin: 0 auto;
-  max-width: 30em;
-  font-size: 19px;
-  color: rgba(255, 255, 255, .86);
-}
-
-.lang {
-  display: flex; justify-content: center; gap: 6px;
-  margin: 26px auto 0;
-}
-
-.lang button {
-  font: inherit; font-size: 14px; font-weight: 600;
-  color: #fff; background: rgba(255, 255, 255, .14);
-  border: 1px solid rgba(255, 255, 255, .28); border-radius: 999px;
-  padding: 6px 14px; cursor: pointer;
-}
-
-.lang button[aria-pressed="true"] { background: #fff; color: var(--brand-deep); }
-
-main {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 56px 24px 80px;
-}
-
-h2 {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: .09em;
-  text-transform: uppercase;
-  color: var(--brand);
-  margin: 52px 0 16px;
-}
-
-p { margin: 0 0 16px; }
-
-a { color: var(--brand); }
-
-code { font-size: .92em; }
-
-.lead {
-  font-size: 19px;
-  color: var(--muted);
-}
-
-.card {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 22px 24px;
-  margin: 0 0 20px;
-}
-
-.card p:last-child { margin-bottom: 0; }
-
-.mail {
-  display: inline-block;
-  font-weight: 600;
-  font-size: 19px;
-  word-break: break-all;
-}
-
-.meta {
-  color: var(--faint);
-  font-size: 15px;
-}
-
-footer {
-  border-top: 1px solid var(--line);
-  padding: 28px 24px 48px;
-  text-align: center;
-  color: var(--faint);
-  font-size: 15px;
-}
-
-footer a { color: var(--faint); }
-footer .copy { display: block; margin-top: 10px; }
-
-[hidden] { display: none !important; }
-
-@media (max-width: 560px) {
-  .hero { padding: 52px 20px 46px; }
-  .hero h1 { font-size: 32px; }
-  .hero p { font-size: 17px; }
-  main { padding: 40px 20px 64px; }
-}
+@media (prefers-reduced-motion:reduce){ .rise{animation:none} }
 </style>
 </head>
-<body>
+<body class="doc">
 
-<div class="hero">
+<div class="bgfield"></div>
+<div class="grain"></div>
+
+<div class="wrap">
+
+<nav class="nav">
+  <a class="brand" href="https://lonebench.com/">Lonebench</a>
+  <span>CamDial &middot; privacy</span>
+</nav>
+
+<header class="hero">
   <div class="mark">
     <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
       <circle cx="20" cy="20" r="14" fill="none" stroke="#fff" stroke-width="3.2"/>
@@ -173,13 +137,13 @@ footer .copy { display: block; margin-top: 10px; }
   <h1 data-lang="en">Privacy Policy</h1>
   <h1 data-lang="ja" hidden>プライバシーポリシー</h1>
   <h1 data-lang="ko" hidden>개인정보 처리방침</h1>
-  <p>CamDial for macOS</p>
-  <nav class="lang" aria-label="Language">
+  <p class="lede">CamDial for macOS</p>
+  <nav class="langs" aria-label="Language">
     <button type="button" data-set="en" aria-pressed="true">English</button>
     <button type="button" data-set="ja" aria-pressed="false">日本語</button>
     <button type="button" data-set="ko" aria-pressed="false">한국어</button>
   </nav>
-</div>
+</header>
 
 <main>
 
@@ -187,36 +151,51 @@ footer .copy { display: block; margin-top: 10px; }
 
 <p class="lead">CamDial collects nothing. It has no network access, and it never opens a video stream.</p>
 
+<div class="panel rise">
 <h2>What is collected</h2>
 
 <p>Nothing. CamDial does not collect, store, transmit, or share any personal information. There are no accounts, no sign-in, no analytics, no crash reporting, no advertising identifiers, and no third-party SDKs of any kind.</p>
+</div>
 
+<div class="panel rise">
 <h2>Why that claim is verifiable</h2>
 
 <p>CamDial is distributed as a sandboxed Mac App Store application, and it is built without the <code>com.apple.security.network.client</code> entitlement. macOS enforces this at the system level: the app is structurally unable to open an outbound network connection. This is a property of the shipped binary, and Apple verifies it during review.</p>
+</div>
 
+<div class="panel rise">
 <h2>Camera access</h2>
 
 <p>CamDial asks for the camera entitlement for one purpose only: to ask macOS whether your camera is currently in use, so it knows when another app has turned the camera on and your saved settings need restoring. That check returns a yes-or-no answer and no image data. CamDial never opens a video stream, and never views, records, or transmits video or audio.</p>
 
 <p>The camera's settings themselves — exposure, focus, white balance, zoom and the rest — are written to the camera over USB. Reading and writing them involves no image data either.</p>
+</div>
 
+<div class="panel rise">
 <h2>Your settings</h2>
 
 <p>The settings you save are stored on your Mac, in CamDial's own sandboxed preferences. They never leave your computer.</p>
+</div>
 
+<div class="panel rise">
 <h2>Purchases</h2>
 
 <p>CamDial's unlock is a one-time in-app purchase through the Mac App Store. There is no subscription. Payment is handled entirely by Apple; the developer receives only the purchase status — never payment details or personally identifying information about purchasers.</p>
+</div>
 
+<div class="panel rise">
 <h2>Children</h2>
 
 <p>CamDial is not directed at children and collects no data from anyone, including children.</p>
+</div>
 
+<div class="panel rise">
 <h2>Changes to this policy</h2>
 
 <p>If this policy ever changes, the revised version will be posted on this page with a new date below. Any change that would introduce data collection would also require adding network access to the app, which would be visible in the App Store release notes.</p>
+</div>
 
+<div class="panel rise">
 <h2>Contact</h2>
 
 <div class="card">
@@ -225,6 +204,7 @@ footer .copy { display: block; margin-top: 10px; }
 </div>
 
 <p class="meta">Last updated: September 23, 2026</p>
+</div>
 
 </section>
 
@@ -232,36 +212,51 @@ footer .copy { display: block; margin-top: 10px; }
 
 <p class="lead">CamDialは何も収集しません。ネットワークにアクセスできず、映像ストリームを開くこともありません。</p>
 
+<div class="panel rise">
 <h2>収集する情報</h2>
 
 <p>ありません。CamDialは個人情報を収集・保存・送信・共有しません。アカウント、サインイン、アナリティクス、クラッシュレポート、広告識別子、サードパーティのSDKは一切含まれていません。</p>
+</div>
 
+<div class="panel rise">
 <h2>この説明が検証可能である理由</h2>
 
 <p>CamDialはサンドボックス化されたMac App Storeアプリとして配布されており、<code>com.apple.security.network.client</code>エンタイトルメントなしでビルドされています。macOSはこれをシステムレベルで強制するため、アプリは構造上、外部へのネットワーク接続を開くことができません。これは配布されるバイナリの性質であり、Appleが審査時に確認します。</p>
+</div>
 
+<div class="panel rise">
 <h2>カメラへのアクセス</h2>
 
 <p>CamDialがカメラのエンタイトルメントを求める目的はひとつだけです。カメラが現在使用中かどうかをmacOSに問い合わせ、別のアプリがカメラを使い始めて保存した設定を復元すべきタイミングを知るためです。この確認が返すのは「はい／いいえ」の答えだけで、画像データは含まれません。CamDialは映像ストリームを開くことはなく、映像や音声を表示・録画・送信することもありません。</p>
 
 <p>露出、フォーカス、ホワイトバランス、ズームなどのカメラ設定そのものは、USB経由でカメラに書き込まれます。この読み書きにも画像データは関わりません。</p>
+</div>
 
+<div class="panel rise">
 <h2>保存される設定</h2>
 
 <p>保存した設定は、お使いのMac内にあるCamDialのサンドボックス化された環境設定に保存されます。コンピュータの外に出ることはありません。</p>
+</div>
 
+<div class="panel rise">
 <h2>購入</h2>
 
 <p>CamDialのロック解除は、Mac App Storeを通じた買い切りのアプリ内課金です。サブスクリプションはありません。決済はすべてAppleが処理し、開発者が受け取るのは購入状態のみです。決済情報や購入者を特定できる情報を受け取ることはありません。</p>
+</div>
 
+<div class="panel rise">
 <h2>お子様について</h2>
 
 <p>CamDialは子供向けのアプリではなく、子供を含め誰からもデータを収集しません。</p>
+</div>
 
+<div class="panel rise">
 <h2>ポリシーの変更</h2>
 
 <p>このポリシーを変更する場合は、改訂版をこのページに新しい日付とともに掲載します。データ収集を導入するような変更にはアプリへのネットワークアクセスの追加が必要となり、それはApp Storeのリリースノートに表示されます。</p>
+</div>
 
+<div class="panel rise">
 <h2>お問い合わせ</h2>
 
 <div class="card">
@@ -270,6 +265,7 @@ footer .copy { display: block; margin-top: 10px; }
 </div>
 
 <p class="meta">最終更新日: 2026年9月23日</p>
+</div>
 
 </section>
 
@@ -277,36 +273,51 @@ footer .copy { display: block; margin-top: 10px; }
 
 <p class="lead">CamDial은 아무것도 수집하지 않습니다. 네트워크에 접근할 수 없고, 영상 스트림을 열지도 않습니다.</p>
 
+<div class="panel rise">
 <h2>수집하는 정보</h2>
 
 <p>없습니다. CamDial은 어떤 개인정보도 수집·저장·전송·공유하지 않습니다. 계정, 로그인, 분석 도구, 충돌 보고, 광고 식별자, 서드파티 SDK가 전혀 없습니다.</p>
+</div>
 
+<div class="panel rise">
 <h2>이 주장을 검증할 수 있는 이유</h2>
 
 <p>CamDial은 샌드박스가 적용된 Mac App Store 앱으로 배포되며, <code>com.apple.security.network.client</code> 엔타이틀먼트 없이 빌드됩니다. macOS가 이를 시스템 수준에서 강제하므로 앱은 구조적으로 외부 네트워크 연결을 열 수 없습니다. 이는 배포되는 바이너리의 속성이며 Apple이 심사 과정에서 확인합니다.</p>
+</div>
 
+<div class="panel rise">
 <h2>카메라 접근</h2>
 
 <p>CamDial이 카메라 엔타이틀먼트를 요청하는 목적은 하나뿐입니다. 카메라가 지금 사용 중인지 macOS에 물어봐서, 다른 앱이 카메라를 켰고 저장한 설정을 복구해야 할 시점을 알기 위해서입니다. 이 확인은 예/아니오만 돌려주며 이미지 데이터는 포함되지 않습니다. CamDial은 영상 스트림을 열지 않으며, 영상이나 음성을 보거나 녹화하거나 전송하지 않습니다.</p>
 
 <p>노출, 초점, 화이트밸런스, 줌 등 카메라 설정 자체는 USB를 통해 카메라에 기록됩니다. 이 읽기·쓰기에도 이미지 데이터는 관여하지 않습니다.</p>
+</div>
 
+<div class="panel rise">
 <h2>저장되는 설정</h2>
 
 <p>저장한 설정은 Mac 안의 CamDial 샌드박스 환경설정에 보관됩니다. 컴퓨터 밖으로 나가지 않습니다.</p>
+</div>
 
+<div class="panel rise">
 <h2>구매</h2>
 
 <p>CamDial의 잠금 해제는 Mac App Store를 통한 일회성 인앱 구매입니다. 구독은 없습니다. 결제는 전적으로 Apple이 처리하며, 개발자는 구매 상태만 받을 뿐 결제 정보나 구매자를 식별할 수 있는 정보는 받지 않습니다.</p>
+</div>
 
+<div class="panel rise">
 <h2>아동</h2>
 
 <p>CamDial은 아동을 대상으로 하지 않으며, 아동을 포함해 누구에게서도 데이터를 수집하지 않습니다.</p>
+</div>
 
+<div class="panel rise">
 <h2>정책 변경</h2>
 
 <p>이 정책이 바뀌면 개정본을 아래 날짜와 함께 이 페이지에 게시합니다. 데이터 수집을 도입하는 변경에는 앱에 네트워크 접근을 추가해야 하며, 그 사실은 App Store 릴리스 노트에 드러납니다.</p>
+</div>
 
+<div class="panel rise">
 <h2>문의</h2>
 
 <div class="card">
@@ -315,6 +326,7 @@ footer .copy { display: block; margin-top: 10px; }
 </div>
 
 <p class="meta">최종 수정일: 2026년 9월 23일</p>
+</div>
 
 </section>
 
@@ -324,8 +336,11 @@ footer .copy { display: block; margin-top: 10px; }
   <a href="index.html" data-lang="en">Support</a>
   <a href="index.html" data-lang="ja" hidden>サポート</a>
   <a href="index.html" data-lang="ko" hidden>지원</a>
-  <span class="copy">© 2026 Lee Hyangeun</span>
+  <a href="https://lonebench.com/">Lonebench</a>
+  <span class="sp">© 2026 Lee Hyangeun</span>
 </footer>
+
+</div>
 
 <script>
 (function () {
@@ -342,12 +357,12 @@ footer .copy { display: block; margin-top: 10px; }
     document.querySelectorAll("[data-lang]").forEach(function (el) {
       el.hidden = el.getAttribute("data-lang") !== lang;
     });
-    document.querySelectorAll(".lang button").forEach(function (b) {
+    document.querySelectorAll(".langs button").forEach(function (b) {
       b.setAttribute("aria-pressed", b.getAttribute("data-set") === lang ? "true" : "false");
     });
     try { localStorage.setItem("lang", lang); } catch (e) {}
   }
-  document.querySelectorAll(".lang button").forEach(function (b) {
+  document.querySelectorAll(".langs button").forEach(function (b) {
     b.addEventListener("click", function () { apply(b.getAttribute("data-set")); });
   });
   apply(pick());
