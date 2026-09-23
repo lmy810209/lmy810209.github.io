@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CamDial — Support</title>
+<meta name="description" content="Support and help for CamDial, a Mac app that keeps webcam settings from resetting." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+<style>
+@view-transition { navigation: auto; }
+@property --lift { syntax:'<length>'; initial-value:0px; inherits:false; }
+@property --angle { syntax:'<angle>'; initial-value:0deg; inherits:false; }
+:root{
+  --bg:#07080b; --ink:#f3f5f8; --soft:#a4adba; --faint:#6a7380;
+  --line:rgba(255,255,255,.08); --glass:rgba(12,14,19,.64);
+  --g1:#3ddc97; --g2:#5b8cff; --teal:#2FD1D1;
+  --sans:"Space Grotesk",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --spring:linear(0,.26 4.6%,.64 10%,.9 15%,1.02 20%,1.05 26%,1.01 36%,.998 50%,1);
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+a:focus-visible{outline:2px solid var(--g1);outline-offset:3px;border-radius:2px}
+h1,h2,h3{text-wrap:balance} p{text-wrap:pretty}
+
+.bgfield{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(60rem 40rem at 72% 12%, rgba(47,209,209,.16), transparent 62%),
+    radial-gradient(48rem 36rem at 12% 78%, rgba(91,140,255,.10), transparent 64%),
+    radial-gradient(ellipse at 60% 30%, #12161d, var(--bg) 72%)}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.45;
+  background-image:radial-gradient(rgba(255,255,255,.055) 1px, transparent 1px);
+  background-size:3px 3px;mix-blend-mode:screen}
+
+.wrap{position:relative;z-index:2;max-width:64rem;margin:0 auto;padding-inline:26px}
+.nav{position:sticky;top:0;z-index:5;padding:22px 0;display:flex;justify-content:space-between;align-items:center;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.nav a.brand{font-weight:700;text-decoration:none;font-size:1.02rem}
+.nav span{font-family:var(--mono);font-size:.72rem;color:var(--g1)}
+
+.hero{padding:76px 0 54px;display:flex;flex-direction:column;align-items:flex-start}
+.mark{width:72px;height:72px;border-radius:19px;display:grid;place-items:center;margin-bottom:26px;
+  background:linear-gradient(150deg,#17B3B3,#0A7A7A);
+  box-shadow:0 18px 40px -18px rgba(47,209,209,.7), inset 0 1px 0 rgba(255,255,255,.28)}
+.hero h1{font-weight:700;font-size:clamp(2.6rem,6.4vw,4.4rem);line-height:.98;letter-spacing:-.04em;margin:0 0 16px}
+.hero .lede{margin:0 0 30px;color:var(--soft);font-size:1.08rem;max-width:40ch}
+
+.langs{display:flex;gap:8px}
+.langs button{font-family:var(--mono);font-size:.76rem;letter-spacing:.02em;cursor:pointer;
+  padding:9px 16px;border-radius:99px;border:1px solid var(--line);background:rgba(255,255,255,.04);
+  color:var(--soft);transition:color .2s,border-color .2s,background .2s}
+.langs button:hover{color:var(--ink);border-color:rgba(255,255,255,.2)}
+.langs button[aria-pressed="true"]{background:linear-gradient(115deg,var(--g1),#7ef0c0);color:#05231a;border-color:transparent;font-weight:500}
+
+.panel{background:var(--glass);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);
+  border:1px solid var(--line);border-radius:22px;padding:36px;margin-bottom:18px}
+.panel h2{font-weight:700;font-size:clamp(1.6rem,3.6vw,2.3rem);letter-spacing:-.03em;line-height:1.1;margin:0 0 22px;max-width:20ch}
+.panel > p{color:var(--soft);max-width:64ch;margin:0 0 18px}
+.panel > p:last-child{margin-bottom:0}
+.panel strong{color:var(--ink);font-weight:500}
+.panel a{color:var(--g1);text-decoration:none;border-bottom:1px solid rgba(61,220,151,.35)}
+.panel a:hover{border-bottom-color:var(--g1)}
+
+.mailbox{border:1px solid var(--line);border-radius:16px;padding:26px;background:rgba(255,255,255,.025)}
+.mailbox p{margin:0 0 14px;color:var(--soft)}
+.mailbox p:last-child{margin-bottom:0}
+.mail{display:inline-block;font-family:var(--mono);font-size:1.06rem;color:var(--g1)!important;
+  text-decoration:none;border-bottom:1px solid rgba(61,220,151,.45)!important}
+.note{font-size:.9rem;color:var(--faint)!important}
+
+.qa{border-top:1px solid var(--line);padding-top:22px;margin-top:22px}
+.qa:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.qa h3{margin:0 0 8px;font-size:1.06rem;font-weight:600;letter-spacing:-.01em}
+.qa p{margin:0;color:var(--soft);font-size:.97rem;max-width:64ch}
+
+footer{position:relative;z-index:2;border-top:1px solid var(--line);margin-top:42px;
+  padding:26px 0 64px;color:var(--faint);font-size:.9rem;
+  display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center}
+footer a{color:var(--soft);text-decoration:none}
+footer a:hover{color:var(--ink)}
+footer .sp{margin-left:auto;font-family:var(--mono);font-size:.76rem}
+
+.lead{font-size:1.12rem;color:var(--ink);max-width:58ch;margin:0 0 26px;padding-left:16px;
+  border-left:2px solid var(--g1)}
+section > p.meta{font-family:var(--mono);font-size:.78rem;color:var(--faint);margin:22px 0 0}
+.card{border:1px solid var(--line);border-radius:16px;padding:26px;background:rgba(255,255,255,.025)}
+.card p{margin:0 0 14px;color:var(--soft)} .card p:last-child{margin-bottom:0}
+.card p.meta{font-size:.9rem;color:var(--faint)}
+code{font-family:var(--mono);font-size:.86em;background:rgba(255,255,255,.07);
+  padding:2px 7px;border-radius:5px;color:var(--ink);word-break:break-all}
+.panel ul{margin:0;padding-left:1.1em;color:var(--soft)} .panel li{margin-bottom:6px}
+
+.rise{animation:rise both cubic-bezier(.22,1,.3,1);animation-timeline:view(block);animation-range:entry 5% cover 28%}
+@keyframes rise{from{opacity:0;translate:0 44px}to{opacity:1;translate:0 0}}
+@supports not (animation-timeline:view()){.rise{animation:none}}
+
+@media (max-width:700px){
+  body{font-size:16px}
+  .hero{padding:52px 0 40px}
+  .panel{padding:24px;border-radius:18px}
+  footer .sp{margin-left:0;width:100%}
+}
+@media (prefers-reduced-motion:reduce){ .rise{animation:none} }
+</style>
+</head>
+<body>
+
+<div class="bgfield"></div>
+<div class="grain"></div>
+
+<div class="wrap">
+
+<nav class="nav">
+  <a class="brand" href="/camdial/">CamDial</a>
+  <span>CamDial &middot; support</span>
+</nav>
+
+<header class="hero">
+  <div class="mark">
+    <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="20" r="14" fill="none" stroke="#fff" stroke-width="3.2"/>
+      <circle cx="20" cy="20" r="7" fill="#fff" fill-opacity=".92"/>
+      <circle cx="20" cy="20" r="3" fill="#a8f0f0"/>
+      <circle cx="32.1" cy="13" r="3" fill="#a8f0f0" stroke="#fff" stroke-width="1.2"/>
+    </svg>
+  </div>
+  <h1>CamDial</h1>
+  <p class="lede" data-lang="en">Webcam settings that stay put — written to the camera itself, restored automatically.</p>
+  <p class="lede" data-lang="ja" hidden>Webカメラの設定をそのまま保つ — カメラ本体に書き込み、自動で元に戻します。</p>
+  <p class="lede" data-lang="ko" hidden>다시 돌아가지 않는 웹캠 설정 — 카메라 자체에 기록하고 자동으로 되돌립니다.</p>
+  <nav class="langs" aria-label="Language">
+    <button type="button" data-set="en" aria-pressed="true">English</button>
+    <button type="button" data-set="ja" aria-pressed="false">日本語</button>
+    <button type="button" data-set="ko" aria-pressed="false">한국어</button>
+  </nav>
+</header>
+
+<main>
+
+<section data-lang="en">
+
+<div class="panel rise">
+  <h2>Contact</h2>
+  <div class="mailbox">
+    <p>Questions, bug reports, feature requests — write to me directly. I read every message.</p>
+    <p><a class="mail" href="mailto:findappshelp@gmail.com">findappshelp@gmail.com</a></p>
+    <p class="note">I usually reply within two business days. Telling me your macOS version and your webcam model makes a fix much faster.</p>
+  </div>
+</div>
+
+<div class="panel rise">
+  <h2>Requirements</h2>
+  <p>macOS 14 Sonoma or later on Apple silicon, and a USB webcam that follows the UVC standard — which covers most models from Logitech, Elgato, Razer, Anker and others. CamDial is verified with the Logitech C920.</p>
+</div>
+
+<div class="panel rise">
+  <h2>Questions people ask</h2>
+
+  <div class="qa">
+    <h3>It says &ldquo;No camera found.&rdquo;</h3>
+    <p>CamDial talks to USB webcams only. The built-in FaceTime camera and iPhone Continuity Camera are not supported, because macOS does not expose their hardware controls. If your USB webcam is plugged in and still not found, try another USB port or cable, then click the refresh arrow in the panel header. Cameras behind some USB hubs are not visible to the app.</p>
+  </div>
+
+  <div class="qa">
+    <h3>My settings keep going back to default.</h3>
+    <p>That is the camera, not CamDial — many webcams reset to factory values the moment a video app starts. The fix is the paid part of the app: click <strong>Unlock</strong>, complete the one-time purchase, then click <strong>Save Settings</strong>. From then on CamDial puts your saved values back whenever another app turns the camera on, the camera is reconnected, or your Mac wakes from sleep. The pill under the camera name shows how many times it did that today.</p>
+  </div>
+
+  <div class="qa">
+    <h3>I changed a slider but nothing happened in Zoom / Meet / Teams.</h3>
+    <p>Check the <strong>Auto</strong> switch on that row. While exposure, focus or white balance is on Auto, the camera ignores manual values — switch it to manual first. Also make sure the other app is using the same camera CamDial shows in its header.</p>
+  </div>
+
+  <div class="qa">
+    <h3>Some controls I expected are missing.</h3>
+    <p>CamDial only shows the controls your camera reports as supported. Zoom, gain or sharpness missing means the camera&rsquo;s firmware does not offer them.</p>
+  </div>
+
+  <div class="qa">
+    <h3>I bought the unlock on another Mac.</h3>
+    <p>Open <strong>Settings… › Purchase › Restore Purchases</strong> while signed in with the same Apple Account. The unlock is a one-time purchase — no subscription.</p>
+  </div>
+
+  <div class="qa">
+    <h3>How do I set an exact value?</h3>
+    <p>Click the number next to a slider and type the value, then press Return. With a slider focused, the arrow keys move it one step at a time, or ten steps with Shift.</p>
+  </div>
+
+  <div class="qa">
+    <h3>Does CamDial see my video?</h3>
+    <p>No. It never opens a video stream. The camera permission exists only so the app can ask macOS whether the camera is currently in use — that is how it knows when to restore your settings. See the <a href="../privacy.html">privacy policy</a>.</p>
+  </div>
+
+  <div class="qa">
+    <h3>Refunds</h3>
+    <p>Purchases are handled by Apple, so refunds go through them at <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>. If something is broken, though, write to me first — I would rather fix it.</p>
+  </div>
+
+</div>
+
+</section>
+
+<section data-lang="ja" hidden>
+
+<div class="panel rise">
+  <h2>お問い合わせ</h2>
+  <div class="mailbox">
+    <p>ご質問、不具合の報告、機能のご要望は、開発者に直接メールでお送りください。すべて目を通しています。</p>
+    <p><a class="mail" href="mailto:findappshelp@gmail.com">findappshelp@gmail.com</a></p>
+    <p class="note">通常2営業日以内に返信します。macOSのバージョンとWebカメラの機種を書き添えていただくと、解決が早くなります。英語または日本語でどうぞ。</p>
+  </div>
+</div>
+
+<div class="panel rise">
+  <h2>動作環境</h2>
+  <p>Apple siliconを搭載したmacOS 14 Sonoma以降と、UVC規格に準拠したUSB Webカメラ。ロジクール、Elgato、Razer、Ankerなど多くの製品が該当します。動作確認はLogitech C920で行っています。</p>
+</div>
+
+<div class="panel rise">
+  <h2>よくある質問</h2>
+
+  <div class="qa">
+    <h3>「カメラが見つかりません」と表示されます。</h3>
+    <p>CamDialが扱えるのはUSB接続のWebカメラだけです。Mac内蔵のFaceTimeカメラとiPhoneの連係カメラは、macOSがハードウェア調整を公開していないため対応していません。USB Webカメラを接続しても見つからない場合は、別のUSBポートやケーブルを試してから、パネル上部の更新矢印をクリックしてください。一部のUSBハブ経由では認識できないことがあります。</p>
+  </div>
+
+  <div class="qa">
+    <h3>設定が勝手に初期値に戻ってしまいます。</h3>
+    <p>それはカメラ側の動作です。多くのWebカメラは、ビデオ会議アプリが起動した瞬間に工場出荷時の値へ戻ります。これを防ぐのが有料機能です。<strong>ロック解除</strong>をクリックして買い切りの購入を完了し、<strong>設定を保存</strong>をクリックしてください。以後、別のアプリがカメラを使い始めたとき、カメラを接続し直したとき、Macがスリープから復帰したときに、保存した値を自動で書き戻します。カメラ名の下の表示で、今日何回復元したかがわかります。</p>
+  </div>
+
+  <div class="qa">
+    <h3>スライダーを動かしてもZoomやMeet、Teamsの映像が変わりません。</h3>
+    <p>その行の<strong>自動</strong>スイッチを確認してください。露出・フォーカス・ホワイトバランスが自動のあいだ、カメラは手動の値を無視します。先に手動へ切り替えてください。また、相手のアプリがCamDialの見出しに表示されているカメラと同じカメラを使っているかも確認してください。</p>
+  </div>
+
+  <div class="qa">
+    <h3>あるはずの項目が表示されません。</h3>
+    <p>CamDialは、お使いのカメラが「対応している」と報告した項目だけを表示します。ズーム、ゲイン、シャープネスが見当たらない場合、そのカメラのファームウェアがその機能を提供していません。</p>
+  </div>
+
+  <div class="qa">
+    <h3>別のMacでロック解除を購入しました。</h3>
+    <p>同じApple Accountでサインインした状態で、<strong>設定… › 購入 › 購入を復元</strong>を開いてください。ロック解除は買い切りで、サブスクリプションではありません。</p>
+  </div>
+
+  <div class="qa">
+    <h3>値を正確に指定したいです。</h3>
+    <p>スライダーの横の数値をクリックして入力し、Returnキーを押してください。スライダーを選択した状態で矢印キーを押すと1段階ずつ、Shiftを押しながらだと10段階ずつ動きます。</p>
+  </div>
+
+  <div class="qa">
+    <h3>CamDialは映像を見ていますか？</h3>
+    <p>いいえ。映像ストリームを開くことは一切ありません。カメラの権限は、カメラが現在使用中かどうかをmacOSに問い合わせるためだけにあります。それが設定を復元するタイミングを知る手段です。詳しくは<a href="../privacy.html">プライバシーポリシー</a>をご覧ください。</p>
+  </div>
+
+  <div class="qa">
+    <h3>返金について</h3>
+    <p>購入はAppleが処理しているため、返金は<a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>からAppleに申請してください。不具合が原因の場合は、まず開発者にご連絡ください。修正できるならそのほうが良いので。</p>
+  </div>
+
+</div>
+
+</section>
+
+<section data-lang="ko" hidden>
+
+<div class="panel rise">
+  <h2>문의</h2>
+  <div class="mailbox">
+    <p>질문, 버그 신고, 기능 요청은 개발자에게 직접 메일로 보내 주세요. 모든 메일을 읽습니다.</p>
+    <p><a class="mail" href="mailto:findappshelp@gmail.com">findappshelp@gmail.com</a></p>
+    <p class="note">보통 영업일 기준 2일 안에 답합니다. macOS 버전과 웹캠 모델을 적어 주시면 훨씬 빨리 해결됩니다.</p>
+  </div>
+</div>
+
+<div class="panel rise">
+  <h2>요구 사항</h2>
+  <p>Apple silicon Mac의 macOS 14 Sonoma 이상, 그리고 UVC 표준을 따르는 USB 웹캠(Logitech, Elgato, Razer, Anker 등 대부분의 제품). Logitech C920으로 동작을 확인했습니다.</p>
+</div>
+
+<div class="panel rise">
+  <h2>자주 묻는 질문</h2>
+
+  <div class="qa">
+    <h3>&ldquo;카메라를 찾을 수 없어요&rdquo;라고 나옵니다.</h3>
+    <p>CamDial은 USB 웹캠만 다룹니다. Mac 내장 FaceTime 카메라와 iPhone 연속성 카메라는 macOS가 하드웨어 조절을 제공하지 않아 지원하지 않습니다. USB 웹캠을 꽂았는데도 안 보이면 다른 USB 포트나 케이블을 써 본 뒤 패널 상단의 새로고침 화살표를 눌러 주세요. 일부 USB 허브 뒤의 카메라는 앱에서 보이지 않을 수 있습니다.</p>
+  </div>
+
+  <div class="qa">
+    <h3>설정이 자꾸 기본값으로 돌아갑니다.</h3>
+    <p>그건 카메라의 동작입니다. 많은 웹캠이 화상회의 앱이 시작되는 순간 공장 기본값으로 초기화됩니다. 이를 막는 것이 유료 기능입니다. <strong>잠금 해제</strong>를 눌러 일회성 구매를 마친 뒤 <strong>설정 저장</strong>을 누르세요. 이후 다른 앱이 카메라를 켜거나, 카메라를 다시 연결하거나, Mac이 절전에서 깨어나면 저장한 값을 자동으로 되돌립니다. 카메라 이름 아래 표시에서 오늘 몇 번 복구했는지 볼 수 있습니다.</p>
+  </div>
+
+  <div class="qa">
+    <h3>슬라이더를 움직였는데 Zoom / Meet / Teams 화면이 그대로예요.</h3>
+    <p>그 행의 <strong>자동</strong> 스위치를 확인하세요. 노출·초점·화이트밸런스가 자동인 동안 카메라는 수동 값을 무시합니다. 먼저 수동으로 바꾸세요. 그리고 상대 앱이 CamDial 헤더에 표시된 것과 같은 카메라를 쓰는지도 확인하세요.</p>
+  </div>
+
+  <div class="qa">
+    <h3>있어야 할 항목이 안 보입니다.</h3>
+    <p>CamDial은 카메라가 &ldquo;지원한다&rdquo;고 보고한 항목만 보여 줍니다. 줌·게인·선명도가 없다면 그 카메라의 펌웨어가 해당 기능을 제공하지 않는 것입니다.</p>
+  </div>
+
+  <div class="qa">
+    <h3>다른 Mac에서 잠금 해제를 구매했어요.</h3>
+    <p>같은 Apple 계정으로 로그인한 상태에서 <strong>설정… › 구매 › 구매 복원</strong>을 여세요. 잠금 해제는 일회성 구매이며 구독이 아닙니다.</p>
+  </div>
+
+  <div class="qa">
+    <h3>값을 정확히 맞추고 싶어요.</h3>
+    <p>슬라이더 옆 숫자를 클릭해 값을 입력하고 Return을 누르세요. 슬라이더를 선택한 상태에서 방향키는 한 단계씩, Shift를 누르면 열 단계씩 움직입니다.</p>
+  </div>
+
+  <div class="qa">
+    <h3>CamDial이 제 영상을 보나요?</h3>
+    <p>아니요. 영상 스트림을 여는 일은 없습니다. 카메라 권한은 카메라가 지금 사용 중인지 macOS에 물어보기 위해서만 존재하며, 그것이 설정을 복구할 시점을 아는 방법입니다. <a href="../privacy.html">개인정보 처리방침</a>을 참고하세요.</p>
+  </div>
+
+  <div class="qa">
+    <h3>환불</h3>
+    <p>구매는 Apple이 처리하므로 환불은 <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>에서 Apple에 요청하세요. 다만 무언가 고장난 거라면 먼저 메일을 주세요 — 고치는 편이 낫습니다.</p>
+  </div>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+  <a href="../privacy.html" data-lang="en">Privacy Policy</a>
+  <a href="../privacy.html" data-lang="ja" hidden>プライバシーポリシー</a>
+  <a href="../privacy.html" data-lang="ko" hidden>개인정보 처리방침</a>
+  <a href="/camdial/">Product page</a>
+  <a href="https://lonebench.com/">Lonebench</a>
+  <span class="sp">© 2026 Lee Hyangeun</span>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var langs = ["en", "ja", "ko"];
+  function pick() {
+    var q = new URLSearchParams(location.search).get("lang");
+    if (langs.indexOf(q) >= 0) return q;
+    try { var s = localStorage.getItem("lang"); if (langs.indexOf(s) >= 0) return s; } catch (e) {}
+    var n = (navigator.language || "en").slice(0, 2);
+    return langs.indexOf(n) >= 0 ? n : "en";
+  }
+  function apply(lang) {
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-lang]").forEach(function (el) {
+      el.hidden = el.getAttribute("data-lang") !== lang;
+    });
+    document.querySelectorAll(".langs button").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-set") === lang ? "true" : "false");
+    });
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+  }
+  document.querySelectorAll(".langs button").forEach(function (b) {
+    b.addEventListener("click", function () { apply(b.getAttribute("data-set")); });
+  });
+  apply(pick());
+})();
+</script>
+
+</body>
+</html>
