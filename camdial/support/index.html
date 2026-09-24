@@ -130,9 +130,9 @@ code{font-family:var(--mono);font-size:.86em;background:rgba(255,255,255,.07);
     </svg>
   </div>
   <h1>CamDial</h1>
-  <p class="lede" data-lang="en">Webcam settings that stay put — written to the camera itself, restored automatically.</p>
-  <p class="lede" data-lang="ja" hidden>Webカメラの設定をそのまま保つ — カメラ本体に書き込み、自動で元に戻します。</p>
-  <p class="lede" data-lang="ko" hidden>다시 돌아가지 않는 웹캠 설정 — 카메라 자체에 기록하고 자동으로 되돌립니다.</p>
+  <p class="lede" data-lang="en">Manual exposure, focus, white balance and zoom — written into the camera itself.</p>
+  <p class="lede" data-lang="ja" hidden>露出・フォーカス・ホワイトバランス・ズームを手動で — カメラ本体に書き込みます。</p>
+  <p class="lede" data-lang="ko" hidden>노출·초점·화이트밸런스·줌을 수동으로 — 카메라 자체에 기록합니다.</p>
   <nav class="langs" aria-label="Language">
     <button type="button" data-set="en" aria-pressed="true">English</button>
     <button type="button" data-set="ja" aria-pressed="false">日本語</button>
@@ -168,7 +168,7 @@ code{font-family:var(--mono);font-size:.86em;background:rgba(255,255,255,.07);
 
   <div class="qa">
     <h3>My settings keep going back to default.</h3>
-    <p>That is the camera, not CamDial — many webcams reset to factory values the moment a video app starts. The fix is the paid part of the app: click <strong>Unlock</strong>, complete the one-time purchase, then click <strong>Save Settings</strong>. From then on CamDial puts your saved values back whenever another app turns the camera on, the camera is reconnected, or your Mac wakes from sleep. The pill under the camera name shows how many times it did that today.</p>
+    <p>That is the camera, not CamDial. A webcam keeps its settings in volatile memory, so whenever it loses power — you unplug the cable, switch desks, turn a dock off — it comes back at the factory defaults, with focus and white balance flipped to automatic. The fix is the paid part of the app: click <strong>Unlock</strong>, complete the one-time purchase, then click <strong>Save Settings</strong>. From then on CamDial compares the camera against your saved values whenever it reconnects, whenever an app opens it, and whenever the Mac wakes — and writes them back if anything has moved. The pill under the camera name shows how many times it did that today.</p>
   </div>
 
   <div class="qa">
@@ -231,7 +231,7 @@ code{font-family:var(--mono);font-size:.86em;background:rgba(255,255,255,.07);
 
   <div class="qa">
     <h3>設定が勝手に初期値に戻ってしまいます。</h3>
-    <p>それはカメラ側の動作です。多くのWebカメラは、ビデオ会議アプリが起動した瞬間に工場出荷時の値へ戻ります。これを防ぐのが有料機能です。<strong>ロック解除</strong>をクリックして買い切りの購入を完了し、<strong>設定を保存</strong>をクリックしてください。以後、別のアプリがカメラを使い始めたとき、カメラを接続し直したとき、Macがスリープから復帰したときに、保存した値を自動で書き戻します。カメラ名の下の表示で、今日何回復元したかがわかります。</p>
+    <p>それはカメラ側の動作です。Webカメラは設定を揮発性メモリに保持しているため、電源が切れると——ケーブルを抜いた、別の場所に移った、ドックの電源を落とした——工場出荷時の値に戻り、フォーカスとホワイトバランスも自動に戻ります。これを防ぐのが有料機能です。<strong>ロック解除</strong>をクリックして買い切りの購入を完了し、<strong>設定を保存</strong>をクリックしてください。以後、カメラを接続し直したとき、アプリがカメラを使い始めたとき、Macがスリープから復帰したときに保存値と照らし合わせ、ずれていれば書き戻します。カメラ名の下の表示で、今日何回復元したかがわかります。</p>
   </div>
 
   <div class="qa">
@@ -294,7 +294,7 @@ code{font-family:var(--mono);font-size:.86em;background:rgba(255,255,255,.07);
 
   <div class="qa">
     <h3>설정이 자꾸 기본값으로 돌아갑니다.</h3>
-    <p>그건 카메라의 동작입니다. 많은 웹캠이 화상회의 앱이 시작되는 순간 공장 기본값으로 초기화됩니다. 이를 막는 것이 유료 기능입니다. <strong>잠금 해제</strong>를 눌러 일회성 구매를 마친 뒤 <strong>설정 저장</strong>을 누르세요. 이후 다른 앱이 카메라를 켜거나, 카메라를 다시 연결하거나, Mac이 절전에서 깨어나면 저장한 값을 자동으로 되돌립니다. 카메라 이름 아래 표시에서 오늘 몇 번 복구했는지 볼 수 있습니다.</p>
+    <p>그건 카메라의 동작입니다. 웹캠은 설정을 휘발성 메모리에만 들고 있어서 전원이 끊기면 — 케이블을 뽑거나, 자리를 옮기거나, 독의 전원을 내리면 — 공장 기본값으로 돌아가고, 초점과 화이트밸런스도 자동으로 뒤집힙니다. 이를 막는 것이 유료 기능입니다. <strong>잠금 해제</strong>를 눌러 일회성 구매를 마친 뒤 <strong>설정 저장</strong>을 누르세요. 이후 카메라를 다시 연결할 때, 다른 앱이 카메라를 켤 때, Mac이 절전에서 깨어날 때마다 저장한 값과 비교해서 달라졌으면 되돌려놓습니다. 카메라 이름 아래 표시에서 오늘 몇 번 복구했는지 볼 수 있습니다.</p>
   </div>
 
   <div class="qa">

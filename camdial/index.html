@@ -4,8 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="icon" href="/camdial/favicon.svg" type="image/svg+xml" />
-<title>CamDial — webcam settings that stay put</title>
-<meta name="description" content="A Mac app that writes your webcam settings to the camera itself and puts them back whenever an app, a replug or sleep resets them." />
+<title>CamDial — the webcam controls macOS leaves out</title>
+<meta name="description" content="A Mac app that gives you manual exposure, focus, white balance and zoom on a USB webcam — written into the camera itself, so every app sees them." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
@@ -110,10 +110,10 @@ footer p{margin:0 0 6px} footer a{color:var(--soft)}
 
   <section id="stage">
     <div class="pin">
-      <h1>Settings that survive the next meeting.</h1>
-      <p class="lede">Most webcams throw your exposure, focus and white balance away the moment a video app starts. CamDial writes them to the camera itself and puts them back.</p>
+      <h1>Your webcam has dials. macOS hides them.</h1>
+      <p class="lede">Exposure, focus, white balance and zoom live in the camera’s own hardware. macOS gives you no way in. CamDial is that way in — and it writes your values back when the camera forgets them.</p>
       <div class="count"><b id="cnt">0</b><span>controls restored</span></div>
-      <p id="log">saved — scroll to watch a reset</p>
+      <p id="log">saved — scroll to watch the camera forget</p>
       <div class="meta"><span>macOS <b>14+</b></span><span>Apple <b>silicon</b></span><span>USB <b>UVC webcams</b></span></div>
       <div><a class="btn" href="support/">Read the support page</a>
       <span class="sub">Coming to the Mac App Store — $7.99 once, not a subscription.</span></div>
@@ -121,11 +121,11 @@ footer p{margin:0 0 6px} footer a{color:var(--soft)}
   </section>
 
   <section class="panel rise">
-    <h2>Three things that undo your settings</h2>
+    <h2>Set by hand what macOS decides for you</h2>
     <div class="three">
-      <div><h3>An app takes the camera</h3><p>Zoom, Meet, Teams, OBS — many webcams snap back to factory values the instant a video stream opens. You fixed the exposure this morning; the call resets it.</p></div>
-      <div><h3>You unplug it</h3><p>A webcam keeps its settings in volatile memory. Pull the cable, move to another desk, plug it back in — everything is default again.</p></div>
-      <div><h3>The Mac sleeps</h3><p>Close the lid and the camera loses power with it. CamDial watches for the wake and writes your values back before the next call starts.</p></div>
+      <div><h3>Exposure</h3><p>A window behind you, a lamp beside you, and the camera keeps hunting. Set the exposure once and it stops guessing — you look the same at 9am and at 6pm.</p></div>
+      <div><h3>Focus</h3><p>Autofocus breathes in and out while you talk, and racks away every time you move a hand. Lock it on your face and it stays there.</p></div>
+      <div><h3>White balance</h3><p>Auto white balance drifts as the light changes and your skin goes blue, then orange. Pin the temperature and the colour holds.</p></div>
     </div>
   </section>
 
@@ -134,11 +134,18 @@ footer p{margin:0 0 6px} footer a{color:var(--soft)}
     <p class="soft">CamDial speaks UVC over USB — the same protocol the camera's own firmware uses. The values land in the hardware, so every app sees them: Zoom, Meet, Teams, QuickTime, OBS, anything. There is no virtual camera to select and nothing to keep running in the background of a call.</p>
     <table>
       <tr><th>Controls it can hold</th><td>12</td></tr>
-      <tr><th>Events it restores after</th><td>3</td></tr>
+      <tr><th>Seconds to put them back</th><td>8</td></tr>
       <tr><th>Video streams it opens</th><td>0</td></tr>
       <tr><th>Network connections it can make</th><td>0</td></tr>
     </table>
     <p class="soft" style="margin-top:22px">Exposure, gain, brightness, contrast, saturation, sharpness, white balance, focus, zoom, backlight compensation, hue and power-line frequency — whichever of those your camera reports as supported.</p>
+  </section>
+
+  <section class="panel rise">
+    <h2>And it stays there</h2>
+    <p class="soft">A webcam keeps its settings in volatile memory. Cut its power — unplug the cable, move to another desk, switch the dock off — and it comes back at the factory defaults, with focus and white balance flipped back to automatic.</p>
+    <p class="soft">CamDial watches for that. On a real Logitech C920, every reconnect reset six controls; CamDial noticed and wrote all of them back within eight seconds, without being asked. It does the same check when an app opens the camera and when the Mac wakes, and leaves the camera alone when nothing has moved.</p>
+    <p class="soft">This is the part the manufacturer’s own software gets wrong: it holds your settings in the app, not in the camera, so they last only as long as it keeps running.</p>
   </section>
 
   <section class="panel rise">

@@ -126,10 +126,10 @@ S.start((t, dt) => {
   if (cnt && restored !== lastCount) { cnt.textContent = String(restored); lastCount = restored; }
   if (log) {
     let phase;
-    if (p < RESET_A) phase = "saved — scroll to see a reset";
-    else if (p < HOLD) phase = "another app took the camera — values gone";
+    if (p < RESET_A) phase = "saved — scroll to cut the power";
+    else if (p < HOLD) phase = "power lost — back to factory defaults";
     else if (restored < N) phase = "restoring " + NAMES[Math.min(N - 1, restored)];
-    else phase = "all " + N + " controls back";
+    else phase = "all " + N + " controls back — 8 seconds";
     if (phase !== lastPhase) { log.textContent = phase; log.classList.toggle("done", restored === N); lastPhase = phase; }
   }
 
